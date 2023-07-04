@@ -1,8 +1,3 @@
-//The sheet is the object which represents your Google Sheet document
-//The data is a 2D array of all the data in the spreadsheet.
-var sheet = SpreadsheetApp.getActiveSheet();
-var data = sheet.getDataRange().getValues();
-
 //Below is a list of constant variables that do not change.
 //Some of these are considered the "settings" of the application.
 const TODAY = new Date();
@@ -60,10 +55,16 @@ const infoRows = [USERNAME, ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWES
 const infoBoxRowOffset = 2;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
+//The sheet is the object which represents your Google Sheet document
+//The data is a 2D array of all the data in the spreadsheet.
+var sheet = SpreadsheetApp.getActiveSheet();
+var data;
+
 //This is the main method that runs the script.
 //Google has a strict 6-minute time limit for scripts.
 //Due to the usage throttling of the Discogs API, once your collection grows past approximately 120 items, this script will have to run multiple times to update all rows.
 function updateSpreadsheet() {
+    reloadSpreadsheet();
     normalizeSheetStructure();
     for (var i = 1; i < data.length; i++) {
         Logger.log(DISCOGS_ID + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM + ': ' + data[i][columnIndexFor(ALBUM)]);
@@ -254,7 +255,27 @@ function rgbToHex(r, g, b) {
 
 //Loads updated data into the data array. Required frequently so that steps can use previously updated data.
 function reloadSpreadsheet() {
-    data = sheet.getDataRange().getValues();
+    var allData = sheet.getRange("A:" + convertIndexToLetter(sortableColumnNames.length - 1)).getValues();
+    
+    for(var i = 0; i < allData.length; i++){
+      if(rowEmpty(allData[i])){
+        var minimizedArray = [i];
+        for(var j = 0; j < i ; j++){
+          minimizedArray[j] = allData[j];
+        }
+        data = minimizedArray;
+        return;
+      }
+    }
+}
+
+function rowEmpty(rowData){
+  for(var i = 0; i < rowData.length; i++){
+    if(rowData[i] != ""){
+      return false;
+    }
+  }
+  return true;
 }
 
 //Determines if the row should be updated using the last reload date. This prevents the script from updating rows twice in one day.
