@@ -23,7 +23,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 9. You may need to click Run again in Apps Script. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
 
 # Adding To Your Collection - Discogs Import
-The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. A pre-requisite is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for Manual Input.
+The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. A pre-requisite is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for Manual Input.
 
 When you enter your username into the Info box for "Discogs Username", and then click Run in Apps Script, the script will automatically start adding the Discog IDs for the items in your collection. If you do not see anything get added, then either your collection in Discogs is still set to private, or you have input an invalid username.
 
