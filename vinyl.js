@@ -136,7 +136,7 @@ function createInfoBox(){
 
 function loadUserCollection(){
   var userName = sheet.getRange(infoBoxRowOffset + rowIndexFor(USERNAME), infoBoxColumnOffset + 1).getValue();
-  if (userName != null){
+  if (userName != null && userName != ""){
     var url = 'https://api.discogs.com/users/' + userName + '/collection/folders/0/releases';
     
     do{
