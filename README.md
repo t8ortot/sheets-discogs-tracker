@@ -29,7 +29,7 @@ When you enter your username into the Info box for "Discogs Username", and then 
 
 Once all the Discogs IDs are added, the script will begin to load Discogs data for each item. See the section below for Loading Discogs Data.
 
-# Adding To You Collection - Manual Input
+# Adding To Your Collection - Manual Input
 There are certain fields that only you would know such as the purchase date or the price you've paid. Columns that require manual input are noted with an (M). If you do not see the notes, they are most likely hidden behind the filter buttons.
 
 # Loading Discogs Data
