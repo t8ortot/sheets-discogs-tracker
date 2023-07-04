@@ -1,3 +1,8 @@
+//The sheet is the object which represents your Google Sheet document
+//The data is a 2D array of all the data in the spreadsheet.
+var sheet = SpreadsheetApp.getActiveSheet();
+var data = null;
+
 //Below is a list of constant variables that do not change.
 //Some of these are considered the "settings" of the application.
 const TODAY = new Date();
@@ -51,14 +56,10 @@ const TOTAL_RELOAD_DIFF = "Total Reload Difference";
 
 //You may alter which rows appear in the Info box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
-const infoRows = [USERNAME, ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF];
+const infoRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF, USERNAME];
 const infoBoxRowOffset = 2;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
-//The sheet is the object which represents your Google Sheet document
-//The data is a 2D array of all the data in the spreadsheet.
-var sheet = SpreadsheetApp.getActiveSheet();
-var data;
 
 //This is the main method that runs the script.
 //Google has a strict 6-minute time limit for scripts.
@@ -108,11 +109,13 @@ function normalizeSheetStructure() {
 
     createInfoBox();
     loadUserCollection()
-    sheet.autoResizeColumns(1, sortableColumnNames.length);
+    sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
+    sheet.autoResizeColumns(infoBoxColumnOffset, 2);
 }
 
 function createInfoBox(){
   sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset).setValue("Info");
+  sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset + 1).setValue("Values");
   sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset, 1, 2).setBackground(rgbToHex(INFO_BOX_HEADER_COLOR[0], INFO_BOX_HEADER_COLOR[1], INFO_BOX_HEADER_COLOR[2]));
   sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
   
