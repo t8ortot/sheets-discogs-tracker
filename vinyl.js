@@ -5,9 +5,9 @@ var data = null;
 
 //Below is a list of constant variables that do not change.
 //Some of these are considered the "settings" of the application.
-const TODAY = new Date();
+const TODAY = new Date().toLocaleDateString('en-ZA', {timeZone: 'PST'});
 
-//This is the currency that the script writes with. Mutli-currency is not supported, therefore all amounts should be converted to the same currency. The currency can be changed below.
+//This is the currency that the script writes with and Discogs communicates with. Mutli-currency is not supported, therefore all amounts should be converted to the same currency. The currency can be changed below.
 const numberToCurrency = new Intl.NumberFormat("en-US", {
     currency: "USD",
     style: "currency"
@@ -123,6 +123,9 @@ function createInfoBox(){
     sheet.getRange(i + infoBoxRowOffset, infoBoxColumnOffset).setValue(infoRows[i]);
     sheet.getRange(i + infoBoxRowOffset, infoBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
   }
+
+  sheet.getRange(infoRows.length + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check the GitHub repo for latest updates to the script.")');
+  sheet.getRange(infoRows.length + 1 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://paypal.me/t8ortot?country.x=US&locale.x=en_US", "Like it? Donate to show appreciation!")');
 
   sheet.getRange(infoBoxRowOffset, infoBoxColumnOffset, infoRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
@@ -240,9 +243,7 @@ function updateRefreshDiff(oldPrice, rowNumber) {
 
 //Updates the last reload date to be today
 function updateRefreshDate(rowNumber) {
-    sheet.getRange(rowNumber, columnIndexFor(LAST_RELOAD_DATE) + 1).setValue(TODAY.toLocaleDateString('en-ZA', {
-        timeZone: 'PST'
-    }));
+    sheet.getRange(rowNumber, columnIndexFor(LAST_RELOAD_DATE) + 1).setValue(TODAY);
 }
 
 //Converts number to hexadecimal value
@@ -258,7 +259,7 @@ function rgbToHex(r, g, b) {
 
 //Loads updated data into the data array. Required frequently so that steps can use previously updated data.
 function reloadSpreadsheet() {
-    var allData = sheet.getRange("A:" + convertIndexToLetter(sortableColumnNames.length - 1)).getValues();
+    var allData = sheet.getRange("A:" + convertIndexToLetter(sortableColumnNames.length - 1)).getDisplayValues();
     
     for(var i = 0; i < allData.length; i++){
       if(rowEmpty(allData[i])){
@@ -283,11 +284,7 @@ function rowEmpty(rowData){
 
 //Determines if the row should be updated using the last reload date. This prevents the script from updating rows twice in one day.
 function shouldUpdateRow(data, i) {
-    return data[i][columnIndexFor(LAST_RELOAD_DATE)] == null || data[i][columnIndexFor(LAST_RELOAD_DATE)] == '' || data[i][columnIndexFor(LAST_RELOAD_DATE)].toLocaleDateString('en-ZA', {
-        timeZone: 'PST'
-    }) != TODAY.toLocaleDateString('en-ZA', {
-        timeZone: 'PST'
-    })
+    return data[i][columnIndexFor(LAST_RELOAD_DATE)] == null || data[i][columnIndexFor(LAST_RELOAD_DATE)] == '' || data[i][columnIndexFor(LAST_RELOAD_DATE)] != TODAY;
 }
 
 //Finds the index number in the sortableColumnNames for the column header name.
