@@ -21,24 +21,24 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
    * Let the script make external web requests to the Discogs API to import user and pricing data.
    * Let the script display errors to you when something goes wrong.
 9. You may need to click Run again in Apps Script. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
-10. You are ready to start using the script! Visit back here for updates. If you would like to set up the script to run automatically, please see the Script Scheduling section below.
+10. You are ready to start using the script! Visit back here for updates. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
 
 # Outline of Script Steps
 1. Loads current data from the spreadsheet
 2. Normalizes the structure of the spreadsheet
 3. Loads Discogs Collection (see [Automatic Discogs Import](#automatic-discogs-import))
-4. Updates each item with a Discogs ID with data from Discogs (see Loading Discogs Data)
+4. Updates each item with a Discogs ID with data from Discogs (see [Loading Discogs Data](#loading-discogs-data))
 5. Spreadsheet cells with formulas update in real-time.
 
 # Adding To Your Collection
 There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
 
 ## Automatic Discogs Import
-The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. A prerequisite in order to do this is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for Manual Import. Once your collection has been made public, can enter your username into the spreadsheet's Info box for "Discogs Username", and then click Run in Apps Script.
+The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. A prerequisite in order to do this is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import). Once your collection has been made public, can enter your username into the spreadsheet's Info box for "Discogs Username", and then click Run in Apps Script.
 
 When a username has been added to the spreadsheet, every time the script is run it will automatically add the Discogs IDs for all the items in your Discogs collection. The script ONLY adds IDs if they are not already in the spreadsheet. This behavior requires you to add duplicates manually if they are in your collection. Also, the script NEVER removes items, even if they are not in your Discogs collection. Therefore, items can only be deleted from the spreadsheet manually. If nothing is being added, then either your collection in Discogs is set to private, your collection is empty, all items in your collection have already been added, or you have input an invalid username.
 
-Once all the Discogs IDs are added, the script begins to load Discogs data for each item. See the section below for Loading Discogs Data.
+Once all the Discogs IDs are added, the script begins to load Discogs data for each item. See the section below for [Loading Discogs Data](#loading-discogs-data).
 
 ## Manual Import
 You can manually add items to the spreadsheet with or without a Discogs ID. The Discogs ID is the number that can be found in the URL of a release, like so: discogs.com/[Discogs ID]-Artist-Album. When an item is added without a Discogs ID, the script will highlight the row the next time it runs. Once a Discogs ID is added, the script will remove the highlight the next time it is run. An example use of this feature is you may add items by artist/album name that you have ordered but have not yet received. Once you receive the item, you can add its Discogs ID to the row.
