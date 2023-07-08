@@ -56,7 +56,8 @@ The following data is reloaded in the following way:
 - Total: Populated with a formula that calculates the sum of the "Price", "Tax", and "Shipping" columns. This field updates in real-time and changes only when one of the three mentioned fields is updated
 - Discogs Lowest: Populates with the lowest listed price on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. 
 - Discogs Lowest Color: The color of the cell is also updated to reflect the percentage of profit or loss when compared to the "Total" amount. The color gradient reaches its max/min color at +/- 10% respectively by default. The colors and percentages can be changed in the code to meet your needs.
-- Reload Difference: Populates with the change in Discogs Lowest amount 
+- Reload Difference: Populates with the change in Discogs Lowest amount since the last time the script ran.
+- 
 130 rule
 loads (A) stuff - overwrites
 
@@ -71,5 +72,6 @@ Add steps for adding run button in spresheet
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
-- Ability to switch currency
+- Ability to switch currency. Currently only outputs USD.
+- Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
 - Ability to import using Discogs export .csv file.
