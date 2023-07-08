@@ -24,18 +24,21 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 10. You are ready to start using the script! Visit back here for updates. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
 
 # Outline of Script Steps
-1. Loads current data from the spreadsheet
-2. Normalizes the structure of the spreadsheet
-3. Loads Discogs Collection (see [Automatic Discogs Import](#automatic-discogs-import))
-4. Updates each item with a Discogs ID with data from Discogs (see [Loading Discogs Data](#loading-discogs-data))
-5. Spreadsheet cells with formulas update in real-time.
+1. Normalizes the structure of the spreadsheet, which maintains and corrects the structure of the spreadsheet to how it was designed. See [Customizing Structure](#customizing-structure) for instructions to make the spreadsheet fit your needs.
+2. Loads Discogs Collection. See [Automatic Discogs Import](#automatic-discogs-import)) for instructions to start automatically importing your Discogs collection.
+3. Updates each item with a Discogs ID with data from Discogs. See [Loading Discogs Data](#loading-discogs-data)) for which fields are populated with Discogs data, and how.
+4. Spreadsheet cells with formulas update in real-time. See [Loading Discogs Data](#loading-discogs-data)) for which fields have formulas and what they calculate.
 
 # Adding To Your Collection
 There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
 
 ## Automatic Discogs Import
-The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. A prerequisite in order to do this is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import). Once your collection has been made public, can enter your username into the spreadsheet's Info box for "Discogs Username", and then click Run in Apps Script.
+The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. You can do this by adding your username into the spreadsheet's Info box for "Discogs Username", and then click Run in Apps Script.
 
+### Prerequisite
+A prerequisite in order to do this is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import).
+
+### What Happens
 When a username has been added to the spreadsheet, every time the script is run it will automatically add the Discogs IDs for all the items in your Discogs collection. The script ONLY adds IDs if they are not already in the spreadsheet. This behavior requires you to add duplicates manually if they are in your collection. Also, the script NEVER removes items, even if they are not in your Discogs collection. Therefore, items can only be deleted from the spreadsheet manually. If nothing is being added, then either your collection in Discogs is set to private, your collection is empty, all items in your collection have already been added, or you have input an invalid username.
 
 Once all the Discogs IDs are added, the script begins to load Discogs data for each item. See the section below for [Loading Discogs Data](#loading-discogs-data).
@@ -50,40 +53,45 @@ By default, the Discogs
 # Loading Discogs Data
 Every time the script is run, each item that contains a Discogs ID and a Last Reload Date not equal to today will load or calculate all fields that are marked with an (A). This action overwrites any data that was previously populated.
 
-**IMPORTANT NOTE**: Due to limitations in how many times you can get info from Discogs API, in combination with Google Apps Script's strict 6-minute timer (unless you run this from a Google Workspace account), the script can only update approximately 135 items per run. Once your collection exceeds this size, the script will have to be run more than once to update all rows. See [Script Scheduling](#script-scheduling) to get the script to keep retrying on an interval until all rows are updated. 
+**:bangbang: IMPORTANT NOTE :bangbang:**: Due to limitations in how many times you can get info from Discogs API, in combination with Google Apps Script's strict 6-minute timer (unless you run this from a Google Workspace account), the script can only update approximately 135 items per run. Once your collection exceeds this size, the script will have to be run more than once to update all rows. See [Script Scheduling](#script-scheduling) to get the script to keep retrying on an interval until all rows are updated. 
 
 The following data is reloaded in the following way:
-- Artist: Populated using the first name mentioned for the release in Discogs, which is usually the main artist/contributor. Artists that have the same name as other artists are denoted with a number in Discogs, but this number is trimmed off when added to the spreadsheet.
-- Album: Populated with the album name displayed on the release page.
-- Total: Populates with a formula that calculates the sum of the "Price", "Tax", and "Shipping" columns. This field updates in real-time and changes only when one of the three mentioned fields is updated
-- Discogs Lowest: Populates with the lowest listed price on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. 
-- Discogs Lowest Color: The color of the cell is also updated to reflect the percentage of profit or loss when compared to the "Total" amount. The color gradient reaches its max/min color at +/- 10% respectively by default. The colors and percentages can be changed in the code to meet your needs.
-- Reload Difference: Populates with the change in Discogs Lowest amount since the last time the script ran.
-- Last Reload Date: Populates with the date the script last updated the row.
+- **Artist**: Populated using the first name mentioned for the release in Discogs, which is usually the main artist/contributor. Artists that have the same name as other artists are denoted with a number in Discogs, but this number is trimmed off when added to the spreadsheet.
+- **Album**: Populated with the album name displayed on the release page.
+- **Total**: Populates with a formula that calculates the sum of the "Price", "Tax", and "Shipping" columns. This field updates in real-time and changes only when one of the three mentioned fields is updated
+- **Discogs Lowest**: Populates with the lowest listed price on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. 
+- **Discogs Lowest Color**: The color of the cell is also updated to reflect the percentage of profit or loss when compared to the "Total" amount. The color gradient reaches its max/min color at +/- 10% respectively by default. The colors and percentages can be changed in the code to meet your needs.
+- **Reload Difference**: Populates with the change in Discogs Lowest amount since the last time the script ran.
+- **Last Reload Date**: Populates with the date the script last updated the row.
 
 
 ## Info Box
 The following fields in the Info box update automatically in the following ways:
-- Item Investment: Populates with a formula that calculates the sum of all values in the Price column. Can be used to determine investment before tax and shipping costs.
-- Total Investment: Populates with a formula that calculates the sum of all values in the Total column. Can be used to determine the total investment including tax and shipping costs. 
-- Total Discogs Lowest: Populates with a formula that calculates the sum of all values in the Discogs Lowest column. Can be loosely used as a minimum collection value amount.
-- Total Reload Difference: Populates with a formula that calculates the sum of all values in the Reload Difference column. Can be used to show an increase or decrease in the Total Discogs Lowest since the last run.
+- **Item Investment**: Populates with a formula that calculates the sum of all values in the Price column. Can be used to determine investment before tax and shipping costs.
+- **Total Investment**: Populates with a formula that calculates the sum of all values in the Total column. Can be used to determine the total investment including tax and shipping costs. 
+- **Total Discogs Lowest**: Populates with a formula that calculates the sum of all values in the Discogs Lowest column. Can be loosely used as a minimum collection value amount.
+- **Total Reload Difference**: Populates with a formula that calculates the sum of all values in the Reload Difference column. Can be used to show an increase or decrease in the Total Discogs Lowest since the last run.
 
 # Advanced Setup
-There are a few features you may add yourself using the instructions below. These are mostly quality-of-life improvements that cannot be integrated into the script itself.
+There are a few features you may add yourself using the instructions below. These are mostly quality-of-life improvements that have not or cannot be integrated into the script itself.
 
 ## Script Scheduling
 Add steps for scheduling
 note that reload date prevents loading more than once
 
-## Run button in spreadsheet
-Add steps for adding run button in spresheet
+## Run button in the spreadsheet
+Add steps for adding a run button in spreadsheet
+
+## Customizing Structure
+Add steps to customize sheet structure in code. note warnings about changes to structure could cause messes that they would have to clean up.
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
 - Ability to switch currency. Currently only outputs USD.
 - Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
+- Get script to add run button automatically
 - Ability to import using Discogs export .csv file.
 - Expose more settings in the Info box so the code does not need to be touched as often by user
 - Change timing mechanism to use the rate limiting response headers from Discogs to prevent too many requests error.
+- Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
