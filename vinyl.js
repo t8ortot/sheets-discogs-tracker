@@ -48,11 +48,11 @@ const LAST_RELOAD_DATE = "Last Reload Date (A)";
 const sortableColumnNames = [DISCOGS_ID, ARTIST, ALBUM, PURCHASED_DATE, PRICE, TAX, SHIPPING, TOTAL, DISCOGS_LOWEST, RELOAD_DIFF, LAST_RELOAD_DATE, NOTES];
 
 //Row titles in the Info box.
-const USERNAME = "Discogs Username";
-const ITEM_INVESTMENT = "Item Investment";
-const TOTAL_INVESTMENT = "Total Investment";
-const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest";
-const TOTAL_RELOAD_DIFF = "Total Reload Difference";
+const USERNAME = "Discogs Username (M)";
+const ITEM_INVESTMENT = "Item Investment (A)";
+const TOTAL_INVESTMENT = "Total Investment (A)";
+const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest (A)";
+const TOTAL_RELOAD_DIFF = "Total Reload Difference (A)";
 
 //You may alter which rows appear in the Info box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
