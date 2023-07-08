@@ -50,22 +50,31 @@ By default, the Discogs
 # Loading Discogs Data
 Every time the script is run, each item that contains a Discogs ID and a Last Reload Date not equal to today will load or calculate all fields that are marked with an (A). This action overwrites any data that was previously populated.
 
+**IMPORTANT NOTE**: Due to limitations in how many times you can get info from Discogs API, in combination with Google Apps Script's strict 6-minute timer (unless you run this from a Google Workspace account), the script can only update approximately 135 items per run. Once your collection exceeds this size, the script will have to be run more than once to update all rows. See [Script Scheduling](#script-scheduling) to get the script to keep retrying on an interval until all rows are updated. 
+
 The following data is reloaded in the following way:
 - Artist: Populated using the first name mentioned for the release in Discogs, which is usually the main artist/contributor. Artists that have the same name as other artists are denoted with a number in Discogs, but this number is trimmed off when added to the spreadsheet.
 - Album: Populated with the album name displayed on the release page.
-- Total: Populated with a formula that calculates the sum of the "Price", "Tax", and "Shipping" columns. This field updates in real-time and changes only when one of the three mentioned fields is updated
+- Total: Populates with a formula that calculates the sum of the "Price", "Tax", and "Shipping" columns. This field updates in real-time and changes only when one of the three mentioned fields is updated
 - Discogs Lowest: Populates with the lowest listed price on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. 
 - Discogs Lowest Color: The color of the cell is also updated to reflect the percentage of profit or loss when compared to the "Total" amount. The color gradient reaches its max/min color at +/- 10% respectively by default. The colors and percentages can be changed in the code to meet your needs.
 - Reload Difference: Populates with the change in Discogs Lowest amount since the last time the script ran.
-- 
-130 rule
-loads (A) stuff - overwrites
+- Last Reload Date: Populates with the date the script last updated the row.
+
+
+## Info Box
+The following fields in the Info box update automatically in the following ways:
+- Item Investment: Populates with a formula that calculates the sum of all values in the Price column. Can be used to determine investment before tax and shipping costs.
+- Total Investment: Populates with a formula that calculates the sum of all values in the Total column. Can be used to determine the total investment including tax and shipping costs. 
+- Total Discogs Lowest: Populates with a formula that calculates the sum of all values in the Discogs Lowest column. Can be loosely used as a minimum collection value amount.
+- Total Reload Difference: Populates with a formula that calculates the sum of all values in the Reload Difference column. Can be used to show an increase or decrease in the Total Discogs Lowest since the last run.
 
 # Advanced Setup
 There are a few features you may add yourself using the instructions below. These are mostly quality-of-life improvements that cannot be integrated into the script itself.
 
 ## Script Scheduling
 Add steps for scheduling
+note that reload date prevents loading more than once
 
 ## Run button in spreadsheet
 Add steps for adding run button in spresheet
@@ -75,3 +84,6 @@ These are features that have either been thought of or requested. They are consi
 - Ability to switch currency. Currently only outputs USD.
 - Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
 - Ability to import using Discogs export .csv file.
+- Expose more settings in the Info box so the code does not need to be touched as often by user
+- Change timing mechanism to use the rate limiting response headers from Discogs to prevent too many requests error.
+- Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
