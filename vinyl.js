@@ -259,7 +259,7 @@ function rgbToHex(r, g, b) {
 
 //Loads updated data into the data array. Required frequently so that steps can use previously updated data.
 function reloadSpreadsheet() {
-    var allData = sheet.getRange("A:" + convertIndexToLetter(sortableColumnNames.length - 1)).getDisplayValues();
+    var allData = sheet.getRange("A:" + convertIndexToLetter(sortableColumnNames.length - 1)).getValues();
     
     for(var i = 0; i < allData.length; i++){
       if(rowEmpty(allData[i])){
@@ -284,7 +284,7 @@ function rowEmpty(rowData){
 
 //Determines if the row should be updated using the last reload date. This prevents the script from updating rows twice in one day.
 function shouldUpdateRow(data, i) {
-    return data[i][columnIndexFor(LAST_RELOAD_DATE)] == null || data[i][columnIndexFor(LAST_RELOAD_DATE)] == '' || data[i][columnIndexFor(LAST_RELOAD_DATE)] != TODAY;
+    return data[i][columnIndexFor(LAST_RELOAD_DATE)] == null || data[i][columnIndexFor(LAST_RELOAD_DATE)] == '' || sheet.getRange(i + 1, columnIndexFor(LAST_RELOAD_DATE) + 1).getDisplayValues() != TODAY;
 }
 
 //Finds the index number in the sortableColumnNames for the column header name.
