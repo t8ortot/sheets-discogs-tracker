@@ -26,7 +26,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 # Outline of Script Steps
 1. Loads current data from the spreadsheet
 2. Normalizes the structure of the spreadsheet
-3. Loads Discogs Collection (see Automatic Discogs Import)
+3. Loads Discogs Collection (see [Automatic Discogs Import](#automatic-discogs-import))
 4. Updates each item with a Discogs ID with data from Discogs (see Loading Discogs Data)
 5. Spreadsheet cells with formulas update in real-time.
 
