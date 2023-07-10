@@ -124,8 +124,9 @@ function createInfoBox(){
     sheet.getRange(i + infoBoxRowOffset, infoBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
   }
 
-  sheet.getRange(infoRows.length + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check the GitHub repo for latest updates to the script.")');
+  sheet.getRange(infoRows.length + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check for latest updates and documentation to the script.")');
   sheet.getRange(infoRows.length + 1 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://paypal.me/t8ortot?country.x=US&locale.x=en_US", "Like it? Donate to show appreciation!")');
+  sheet.getRange(infoRows.length + 2 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://discordapp.com/users/485233555824443393", "Have an issue or suggestion? Contact me on Discord!")');
 
   sheet.getRange(infoBoxRowOffset, infoBoxColumnOffset, infoRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
