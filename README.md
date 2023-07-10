@@ -14,20 +14,23 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 3. In the menu bar, navigate to Extensions -> Apps Script. You should be presented with a text editor for Apps Script in a new window.
 4. Copy the code from the vinyl.js file in this repository and paste it into the Apps Script text editor, replacing the boilerplate code. Then hit the save button.
 5. In Apps Script, a dropdown should be available next to the Debug button. Make sure this dropdown has the "updateSpreadsheet" option selected.
-6. Click Run. You will be prompted to review permissions. Since you are running this code yourself, it is not sanctioned by Google. 
-7. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)".
+6. Click Run. You will be prompted to review permissions, which are only needed on the first run. Click the profile that the sheet belongs to.
+7. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)". Since you are running this code yourself, it is not verified by Google, thus triggering the warning. 
 8. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
    - Let the script have full control over the spreadsheet so it can make changes automatically.
    - Let the script make external web requests to the Discogs API to import user and pricing data.
    - Let the script display errors to you when something goes wrong.
-9. You may need to click Run again in Apps Script. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
-10. You are ready to start using the script! Visit back here for updates. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
+9. You may need to click Run again in Apps Script if you took too long to accept the permissions. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
+10. You are ready to start using the script! You can continue reading to learn how to use the script and spreadsheet most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
+
+# Updating The Script
+Official updates to the script can only be found in this GitHub repository. In order to preserve your data while performing updates to the script, it is recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would configure with the latest version of the script, and then migrate your data over. Loss of your data is not my responsibility. The structure of the spreadsheet is never guaranteed to remain the same between updates. You are responsible for maintaining your own modifications to the script, if any.
 
 # Outline of Script Steps
 1. Normalizes the structure of the spreadsheet, which maintains and corrects the structure of the spreadsheet to how it was designed. See [Customizing Structure](#customizing-structure) for instructions to make the spreadsheet fit your needs.
-2. Loads Discogs Collection. See [Automatic Discogs Import](#automatic-discogs-import)) for instructions to start automatically importing your Discogs collection.
-3. Updates each item with a Discogs ID with data from Discogs. See [Loading Discogs Data](#loading-discogs-data)) for which fields are populated with Discogs data, and how.
-4. Spreadsheet cells with formulas update in real-time. See [Loading Discogs Data](#loading-discogs-data)) for which fields have formulas and what they calculate.
+2. Loads Discogs Collection. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
+3. Updates each item with a Discogs ID with data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for which fields are populated with Discogs data, and how.
+4. Spreadsheet cells with formulas update in real-time. See [Loading Discogs Data](#loading-discogs-data) for which fields have formulas and what they calculate.
 
 # Adding To Your Collection
 There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
@@ -64,7 +67,6 @@ The following data is reloaded in the following way:
 - **Reload Difference**: Populates with the change in Discogs Lowest amount since the last time the script ran.
 - **Last Reload Date**: Populates with the date the script last updated the row.
 
-
 ## Info Box
 The following fields in the Info box update automatically in the following ways:
 - **Item Investment**: Populates with a formula that calculates the sum of all values in the Price column. Can be used to determine investment before tax and shipping costs.
@@ -84,6 +86,10 @@ Add steps for adding a run button in spreadsheet
 
 ## Customizing Structure
 Add steps to customize sheet structure in code. note warnings about changes to structure could cause messes that they would have to clean up.
+
+# Frequently Asked Questions
+Does the script automatically update itself with the latest updates in this repo?
+- No. Since the setup of this script is run manually as a copy in Apps Script, it does not and cannot have any ties to GitHub. In order to get and apply updates to the script, you will have to come back here to copy the latest updates into Apps Script manually. See [Updating The Script](#updating-the-script)  Options are being explored to host this script as an add-on from Google Marketplace, which would allow automatic updates.
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
