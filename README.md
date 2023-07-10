@@ -3,9 +3,9 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 # Main Features
 - Automatically builds and maintains the format of spreadsheet structure.
-- Automatically imports user collection from Discogs (if Discogs collection is set to public).
+- Automatically imports user collection from Discogs.
 - Allows the user to input their purchase statistics for their own records, such as date of purchase, price, tax, shipping, etc.
-- Automatically fetches the lowest listed price on Discogs for each item and updates the color of the cell correlating to the profit/loss percentage.
+- Automatically fetches the lowest listed price on Discogs for each item and updates color indicators to show profit/loss percentages.
 - Automatically calculates total investment costs and current minimum collection value.
 
 # Getting Started
@@ -17,9 +17,9 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 6. Click Run. You will be prompted to review permissions. Since you are running this code yourself, it is not sanctioned by Google. 
 7. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)".
 8. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
-   * Let the script have full control over the spreadsheet so it can make changes automatically.
-   * Let the script make external web requests to the Discogs API to import user and pricing data.
-   * Let the script display errors to you when something goes wrong.
+   - Let the script have full control over the spreadsheet so it can make changes automatically.
+   - Let the script make external web requests to the Discogs API to import user and pricing data.
+   - Let the script display errors to you when something goes wrong.
 9. You may need to click Run again in Apps Script. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
 10. You are ready to start using the script! Visit back here for updates. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
 
