@@ -32,6 +32,9 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 # Updating The Script
 Optionally, you may update your script to the latest version for new features. Official updates to the script can only be found in this GitHub repository. In order to preserve your data while performing updates to the script, it is recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would configure with the latest version of the script, and then migrate your data over. Loss of your data is not my responsibility. The structure of the spreadsheet is never guaranteed to remain the same between updates. You are responsible for maintaining your own modifications to the script, if any.
 
+# Explanation of Spreadsheet Structure
+Add an explanation for the structure that the spreadsheet builds.
+
 # Adding To Your Collection
 There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
 
@@ -80,7 +83,7 @@ Add steps for scheduling
 note that reload date prevents loading more than once
 
 ## Run button in the spreadsheet
-Add steps for adding a run button in spreadsheet
+Add steps for adding a run button in the spreadsheet
 
 ## Customizing Structure
 Add steps to customize sheet structure in code. note warnings about changes to structure could cause messes that they would have to clean up.
@@ -97,10 +100,14 @@ Why does the script keep reverting my structural changes to the spreadsheet?
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
 - Ability to switch currency. Currently only outputs USD.
 - Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
-- Get script to add run button automatically
+- Get the script to add a run button automatically
 - Ability to import using Discogs export .csv file.
-- Expose more settings in the Info box so the code does not need to be touched as often by user
-- Change timing mechanism to use the rate limiting response headers from Discogs to prevent too many requests error.
+- Expose more settings in the Info box so the code does not need to be touched as often by the user
+- Change the timing mechanism to use the rate-limiting response headers from Discogs to prevent too many request errors.
 - Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
 - Have Discogs Lowest set to a neutral color when there are no listings and lowest gets set to $0.00.
+- See if automatic fields can be set to protect so the user doesn't touch them since their changes would be irrelevant.
+- Set automatic columns to colors that represent that they are not editable.
+- Add a feature to send email reports
+- Add reload icon automatically
