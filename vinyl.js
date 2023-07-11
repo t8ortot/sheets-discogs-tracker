@@ -30,7 +30,7 @@ const INFO_BOX_SUB_HEADER_COLOR = [211, 211, 211]; //Light Gray
 const THRESHOLD_PERCENTAGE = 0.10;
 
 //Sortable Column Headers (Denoted with an (A) if it is automatically populated, or (M) if it requires manual input.)
-const DISCOGS_ID = "Discogs ID (M)";
+const DISCOGS_ID = "Discogs ID (A)";
 const ARTIST = "Artist (A)";
 const ALBUM = "Album (A)";
 const PURCHASED_DATE = "Purchased Date (M)";
