@@ -16,18 +16,17 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 # Getting Started
 1. Go to Google Sheets and create a new sheet.
-2. Name your spreadsheet. You may change the name at any time.
-3. In the menu bar, navigate to Extensions -> Apps Script. You should be presented with a text editor for Apps Script in a new window.
-4. Copy the code from the vinyl.js file in this repository and paste it into the Apps Script text editor, replacing the boilerplate code. Then hit the save button above the text editor.
-5. After you save, a dropdown should be available next to the Debug button. Make sure this dropdown has the "updateSpreadsheet" option selected.
-6. Click Run. You will be prompted to review permissions, which are only needed on the first run. Click the profile that the sheet belongs to if presented with multiple profiles.
-7. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)". Since you are running this code yourself, it is not verified by Google, thus triggering the warning. 
-8. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
+2. In the menu bar, navigate to Extensions -> Apps Script. You should be presented with a text editor for Apps Script in a new window.
+3. Copy the code from the vinyl.js file in this repository and paste it into the Apps Script text editor, replacing the boilerplate code. Then hit the save button above the text editor.
+4. After you save, a dropdown should be available next to the Debug button. Make sure this dropdown has the "updateSpreadsheet" option selected.
+5. Click Run. You will be prompted to review permissions, which are only needed on the first run. Click the profile that the sheet belongs to if presented with multiple profiles.
+6. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)". Since you are running this code yourself, it is not verified by Google, thus triggering the warning. 
+7. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
    - Let the script have full control over the spreadsheet so it can make changes automatically.
    - Let the script make external web requests to the Discogs API to import user and pricing data.
    - Let the script display errors to you when something goes wrong.
-9. You may need to click Run again in Apps Script if you took too long to accept the permissions. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
-10. You are ready to start using the script! You can learn how to add your collection to the spreadsheet in the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
+8. You may need to click Run again in Apps Script if you took too long to accept the permissions. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
+9. You are ready to start using the script! You can learn how to add your collection to the spreadsheet in the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
 
 # Updating The Script
 Optionally, you may update your script to the latest version for new features. Official updates to the script can only be found in this GitHub repository. In order to preserve your data while performing updates to the script, it is recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would configure with the latest version of the script, and then migrate your data over. Loss of your data is not my responsibility. The structure of the spreadsheet is never guaranteed to remain the same between updates. You are responsible for maintaining your own modifications to the script, if any.
