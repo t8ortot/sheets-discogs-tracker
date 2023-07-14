@@ -109,6 +109,8 @@ function normalizeSheetStructure() {
 
     createInfoBox();
     loadUserCollection()
+    sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
+    sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
     sheet.autoResizeColumns(infoBoxColumnOffset, 2);
 }
@@ -126,7 +128,7 @@ function createInfoBox(){
 
   sheet.getRange(infoRows.length + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check for latest updates and documentation to the script.")');
   sheet.getRange(infoRows.length + 1 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://paypal.me/t8ortot?country.x=US&locale.x=en_US", "Like it? Donate to show appreciation!")');
-  sheet.getRange(infoRows.length + 2 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://discordapp.com/users/485233555824443393", "Have an issue or suggestion? Contact me on Discord!")');
+  sheet.getRange(infoRows.length + 2 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://discord.gg/qsQ2CZ8rcS", "Question, issue, or suggestion? Join my Discord!")');
 
   sheet.getRange(infoBoxRowOffset, infoBoxColumnOffset, infoRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
