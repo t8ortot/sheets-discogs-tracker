@@ -116,6 +116,9 @@ How does the script get updated?
 Why does the script keep reverting my structural changes to the spreadsheet?
 - The script is hard-coded to maintain a certain structure so it knows where to put information properly labeled. Changes to the structure, such as adding or removing columns, can be done by altering the script itself. See [Customizing Structure](#customizing-structure) for more information.
 
+Can my data be sorted?
+- Yes! In fact, the script does not put the data into the spreadsheet in any particular order, so it is recommended that you sort your data often by using the filters available on the column headers. This is because the script is unable to detect how you have your data filtered/sorted, so instead of forcing its own filter upon you while updating, it will add new items to the bottom of the spreadsheet. Once resorted, these new items will fall into their correct places.
+
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
@@ -127,6 +130,7 @@ These are features that have either been thought of or requested. They are consi
 - Change the timing mechanism to use the rate-limiting response headers from Discogs to prevent too many request errors.
 - Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
+     - This would allow importing of user lists.
 - Have Discogs Lowest set to a neutral color when there are no listings and lowest gets set to $0.00.
 - See if automatic fields can be set to protect so the user doesn't touch them since their changes would be irrelevant.
 - Set automatic columns to colors that represent that they are not editable.
