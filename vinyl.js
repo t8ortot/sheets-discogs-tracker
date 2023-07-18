@@ -61,12 +61,22 @@ const infoBoxRowOffset = 2;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
 
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('Vinyl Tracker')
+      .addItem('Run Whole Script', 'updateSpreadsheet')
+      .addItem('Reset Structure', 'normalizeSheetStructure')
+      .addItem('Load New Discog Items', 'loadUserCollection')
+      .addToUi();
+}
+
 //This is the main method that runs the script.
 //Google has a strict 6-minute time limit for scripts.
 //Due to the usage throttling of the Discogs API, once your collection grows past approximately 120 items, this script will have to run multiple times to update all rows.
 function updateSpreadsheet() {
     reloadSpreadsheet();
     normalizeSheetStructure();
+    loadUserCollection();
     for (var i = 1; i < data.length; i++) {
         Logger.log(DISCOGS_ID + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM + ': ' + data[i][columnIndexFor(ALBUM)]);
         if (hasDiscogsItemID(i)) {
@@ -108,7 +118,6 @@ function normalizeSheetStructure() {
     sheet.getRange(1, 1, data.length, sortableColumnNames.length).createFilter();
 
     createInfoBox();
-    loadUserCollection()
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
