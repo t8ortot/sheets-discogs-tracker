@@ -44,11 +44,17 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
    - Let the script have full control over the spreadsheet so it can make changes automatically.
    - Let the script make external web requests to the Discogs API to import user and pricing data.
    - Let the script display errors to you when something goes wrong.
+   - Let the script build a custom menu to allow use to run script easier.
 
 ![Allow](assets/Allow.png)
 
 9. You may need to click Run again in Apps Script if you took too long to accept the permissions. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
-10. You are ready to start using the script! You can learn how to add your collection to the spreadsheet in the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
+
+10. After the script runs successfully the first time, you can refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you may run the entire script or select parts of it.
+
+![Menu](assets/Menu.png)
+
+11. You are ready to start using the script! You can learn how to add your collection to the spreadsheet in the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
 
 # Updating The Script
 Optionally, you may update your script to the latest version for new features. Official updates to the script can only be found in this GitHub repository. In order to preserve your data while performing updates to the script, it is recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would configure with the latest version of the script, and then migrate your data over. Loss of your data is not my responsibility. The structure of the spreadsheet is never guaranteed to remain the same between updates. You are responsible for maintaining your own modifications to the script, if any.
