@@ -123,7 +123,7 @@ Can my data be sorted?
 - Yes! In fact, the script does not put the data into the spreadsheet in any particular order, so it is recommended that you sort your data often by using the filters available on the column headers. This is because the script is unable to detect how you have your data filtered/sorted, so instead of forcing its own filter upon you while updating, it will add new items to the bottom of the spreadsheet. Once re-sorted, these new items will fall into their correct places.
 
 Can I run the script without going to Apps Script?
-- Yes! A custom menu called "Vinyl Tracker" loads into the spreadsheet each time the page is refreshed. In this custom menu, there will be an option to run the script.
+- Yes! A custom menu called "Vinyl Tracker" loads into the spreadsheet a few seconds after each time the page is refreshed. Using this custom menu, you can run the script and select parts of it at any time.
 
 
 # Feature Request List
