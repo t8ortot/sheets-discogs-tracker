@@ -2,28 +2,28 @@
 A Google Script project for Google Sheets that can be used to keep an inventory of your vinyl collection with Discogs integration.
 
 # Main Features
-- Automatically builds and maintains the format of spreadsheet structure.
-- Automatically imports user collection from Discogs.
-- Allows the user to input their purchase statistics for their own records, such as date of purchase, price, tax, shipping, etc.
-- Automatically fetches the lowest listed price on Discogs for each item and updates color indicators to show profit/loss percentages.
-- Automatically calculates total investment costs and current minimum collection value.
+- Automatically builds, maintains, and formats the spreadsheet's structure.
+- Automatically imports user's collection data from Discogs.
+- Allows users to input and save their purchase stats, such as date of purchase, price, tax, shipping, etc.
+- Automatically gets the lowest listed price on Discogs for each item.
+- Automatically updates cell colors to visually indicate profit/loss percentages.
+- Automatically calculates collection's total cost and minimum value (using lowest listed prices).
 
 # Outline of Script Steps
-1. Normalizes the structure of the spreadsheet, which maintains and corrects the structure of the spreadsheet to how it was designed. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure. See [Customizing Structure](#customizing-structure) for technical instructions to make the spreadsheet fit your needs.
-2. Loads Discogs Collection. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
-3. Updates each item with a Discogs ID with data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for which fields are populated with Discogs data, and how.
-4. Spreadsheet cells with formulas update in real-time. See [Loading Discogs Data](#loading-discogs-data) for which fields have formulas and what they calculate.
+1. **Normalizes Spreadsheet**: Maintains and corrects the structure of the spreadsheet to how it was designed in the code. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure. See [Customizing Structure](#customizing-structure) for technical instructions to make the spreadsheet fit your needs.
+2. **Loads Discogs Collection**: Inserts new rows for each item in the user's Discogs collection that is not already in the spreadsheet. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
+3. **Loads Discogs Data**: Updates each item with current data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for what data is taken from Discogs and how it is used to update the spreadsheet.
 
 # Getting Started
-1. Go to Google Sheets and create a new sheet.
+1. Go to Google Sheets and create a new blank sheet.
 
 ![New Blank Spreadsheet](assets/NewBlankSpreadsheet.png)
 
-3. In the menu bar, navigate to Extensions -> Apps Script. You should be presented with a text editor for Apps Script in a new window.
+3. In the menu bar, navigate to Extensions -> Apps Script. A new window should open with a text editor for Apps Script.
 
 ![Extension -> Apps Script](assets/ExtensionAppsScript.png)
 
-4. Copy the code from the vinyl.js file in this repository and paste it into the Apps Script text editor, replacing the boilerplate code. Then hit the save button above the text editor.
+4. Copy the code from the vinyl.js file in this GitHub repository and paste it into the Apps Script text editor, replacing any code that is already there. Then hit the save button at the top of the text editor.
 
 ![Save Project](assets/SaveProject.png)
 
@@ -31,7 +31,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 ![Select Update Spreadsheet](assets/SelectUpdateSpreadsheet.png)
 
-6. Click Run. You will be prompted to review permissions, which are only needed on the first run. Click the profile that the sheet belongs to if presented with multiple profiles.
+6. Click Run. You will be prompted to review the necessary permissions this script needs in order to run. Review and approval are only needed on the first run. Choose the profile that the sheet belongs to if presented with multiple profiles.
 
 ![Review Permissions](assets/ReviewPermissions.png)
 
@@ -44,29 +44,29 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
    - Let the script have full control over the spreadsheet so it can make changes automatically.
    - Let the script make external web requests to the Discogs API to import user and pricing data.
    - Let the script display errors to you when something goes wrong.
-   - Let the script build a custom menu to allow use to run script easier.
+   - Let the script build a custom menu to run the script easier.
 
 ![Allow](assets/Allow.png)
 
-9. You may need to click Run again in Apps Script if you took too long to accept the permissions. Once the script is complete, you can go back to the sheet to see the pre-defined structure.
+9. If too much time has passed, you may need to click Run again in Apps Script. Once the script is complete, you can go back to the spreadsheet to see the pre-defined structure that the script has built.
 
-10. After the script runs successfully the first time, you can refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you may run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. Note: This custom menu takes a few seconds to load every time the page is refreshed.
+10. Refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the option to run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
 
 ![Menu](assets/Menu.png)
 
-11. You are ready to start using the script! You can learn how to add your collection to the spreadsheet in the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to set up the script to run automatically, please see the [Script Scheduling](#script-scheduling) section below.
+11. You are now ready to start using the script! You can learn how to add your collection to the spreadsheet using the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading other sections to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to add a few more advanced features to the script that could not be added automatically, see the [Advanced Setup](#advanced-setup) section for more information.
 
 # Updating The Script
-Optionally, you may update your script to the latest version for new features. Official updates to the script can only be found in this GitHub repository. In order to preserve your data while performing updates to the script, it is recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would configure with the latest version of the script, and then migrate your data over. Loss of your data is not my responsibility. The structure of the spreadsheet is never guaranteed to remain the same between updates. You are responsible for maintaining your own modifications to the script, if any.
+You may want to periodically update the script to adopt new features or bug fixes. While it is not currently possible to get updates automatically, you can optionally update your script manually to the latest version for new features. Official updates to the script can only be found in this GitHub repository. Since there is no guarantee of compatibility between versions it is highly recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would build with the latest version of the script, and then manually migrate your data over accordingly. The preservation of your data is solely your responsibility. You are also responsible for maintaining any modifications you make to the script, if any.
 
 # Explanation of Spreadsheet Structure
-The script will automatically build a spreadsheet structure for itself. This structure is coded into the script, therefore any changes you make to the structure within the spreadsheet will be reverted back to the coded structure. If you would like to make changes to the structure, please see [Customizing Structure](#customizing-structure).
+The script automatically builds and maintains a structure for itself in the spreadsheet. This structure is coded into the script, therefore any changes you make to the structure within the spreadsheet will be reverted back to the coded structure. If you would like to make changes to the structure, please see [Customizing Structure](#customizing-structure).
 
 ## Vinyl Tracker Menu
-The script will automatically build a custom menu for itself called "Vinyl Tracker". This menu takes a few seconds to appear after opening or refreshing the page. This menu allows you to run the entire script or only certain pieces of it. Below is a description of what each option does:
-- Run Whole Script: This will run the entire script. Please see [Outline of Script Steps](#outline-of-script-steps) for additional information on what the entire script does.
-- Reset Structure: This will only rebuild the spreadsheet's structure back to what is coded. See below for what that structure is.
-- Load User Collection: This will only add Discogs ID for items in your collection that are not already in the spreadsheet.
+The script automatically adds a custom menu above the spreadsheet called "Vinyl Tracker". This menu always takes a few seconds to appear after opening or refreshing the spreadsheet. This menu allows you to run the entire script or only certain pieces of it. Below is a description of what each option does:
+- **Run Script**: This will run the entire script. Please see [Outline of Script Steps](#outline-of-script-steps) for additional information on what the entire script does.
+- **Reset Structure**: This will only reset the spreadsheet's structure back to what is coded. See below for what that structure is.
+- **Load User Collection**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
 
 ## Collection Section
 The script will build an area where information about your vinyl collection is stored. Each column is marked with an (A) or an (M) to signify that they are (A)utomatically or (M)anually populated, respectively. Fields marked with an (A) are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an (M) are fields that represent infromation that only you would know, requiring you, the user, to manually populate if you wish. Below is a description of what each column represents:
@@ -159,3 +159,4 @@ These are features that have either been thought of or requested. They are consi
 - See if automatic fields can be set to protect so the user doesn't touch them since their changes would be irrelevant.
 - Set automatic columns to colors that represent that they are not editable.
 - Add a feature to send email reports
+- Add menu option to only update Discogs lowest
