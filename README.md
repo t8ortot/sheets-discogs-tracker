@@ -69,26 +69,26 @@ The script automatically adds a custom menu above the spreadsheet called "Vinyl 
 - **Load User Collection**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
 
 ## Collection Section
-The script will build an area where information about your vinyl collection is stored. Each column is marked with an (A) or an (M) to signify that they are (A)utomatically or (M)anually populated, respectively. Fields marked with an (A) are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an (M) are fields that represent infromation that only you would know, requiring you, the user, to manually populate if you wish. Below is a description of what each column represents:
-- Discogs ID: This is the ID associated with the release/item in Discogs. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
-- Artist: This is the name of the artist.
-- Album: This is the name of the album.
-- Purchased Date: This is the date you purchased the item. This is for your own records.
-- Price: This is where you put the price you paid for the item, pre-tax/shipping. If you do not wish to break apart the pricing so granularly, you can just put your total cost here.
-- Tax: This is where you put your tax cost for the item. Nothing is dependent on this value being populated, so it may be left blank.
-- Shipping: This is where you put your shipping cost for the item. Nothing is dependent on this value being populated, so it may be left blank.
-- Total: This is automatically calculated by the script and is the sum of the Price + Tax + Shipping for the row. This value is used to determine the color of the Discogs Lowest cell.
-- Discogs Lowest: This is automatically populated with the lowest listed price for the item on Discogs. The color of this cell is determined by your profit/loss percentage determined using your Total vs Discogs Lowest, reaching the caps at +/- 10%.
-- Reload Difference: This is automatically populated with the amount the price has changed since the last time the script updated the row.
-- Last Reload Date: This is the last time the script updated the row. This script uses this date to know if it has already updated the row for the day.
-- Notes: This is where you can store any notes you have about the item.
+The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only the user would know, requiring them to manually populate if they wish. Below is a description of what each column represents:
+- **Discogs ID**: This is the unique number that identifies the release in Discogs. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
+- **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in the user's Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
+- **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in the user's Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
+- **Purchased Date**: This is the date the item was purchased. This is only for the user's own records and is not used by the script for any reason.
+- **Price**: This is where the user puts the price they paid for the item, pre-tax/shipping. If the user does not wish to break apart the pricing so granularly, they can just put the total cost here instead.
+- **Tax**: This is where the user puts the tax cost for the item. This field can be blank if the user does not wish to granularly break apart costs.
+- **Shipping**: This is where the user puts the shipping cost for the item. This field can be blank if the user does not wish to granularly break apart costs.
+- **Total**: This is automatically calculated by the script and is equal to the sum of the Price, Tax, and Shipping costs of the item. This value is used to determine the color of the Discogs Lowest cell.
+- **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
+- **Reload Difference**: This is automatically populated with the amount that the price has changed since the last time the script updated the row.
+- **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
+- **Notes**: This is where notes about the item can be stored. This is only for the user's own records and is not used by the script for any reason.
 
 ## Info Box
 The script automatically creates an info box on the right side of the [Collection Section](#collection-section). Below is what each row of the info bow is meant to represent:
 - Item Investment: This is automatically populated by calculating the sum of all values in the Price column. This is meant to represent what you paid for your collection prior to tax and shipping costs.
 - Total Investment: This is automatically populated by calculating the sum of all values in the Total column. This is meant to represent what you paid for your collection in total, including tax and shipping.
 - Total Discogs Lowest: This is automatically populated by calculating the sum of all values in the Discogs Lowest column. This is meant to loosely represent your collection's minimum value.
-- Total Reload Difference: This is automatically populated by calculating the sum of all values in the Reload Difference column. This is meant to represent how much your collection's value has changed wince the last time you ran the script.
+- Total Reload Difference: This is automatically populated by calculating the sum of all values in the Reload Difference column. This is meant to represent how much your collection's value has changed since the last time you ran the script.
 - Discogs Username: This is where you would put your Discogs username so the script can manually import your collection for you.
 
 # Adding To Your Collection
