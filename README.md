@@ -9,7 +9,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 - Automatically calculates total investment costs and current minimum collection value.
 
 # Outline of Script Steps
-1. Normalizes the structure of the spreadsheet, which maintains and corrects the structure of the spreadsheet to how it was designed. See [Customizing Structure](#customizing-structure) for instructions to make the spreadsheet fit your needs.
+1. Normalizes the structure of the spreadsheet, which maintains and corrects the structure of the spreadsheet to how it was designed. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure. See [Customizing Structure](#customizing-structure) for technical instructions to make the spreadsheet fit your needs.
 2. Loads Discogs Collection. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
 3. Updates each item with a Discogs ID with data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for which fields are populated with Discogs data, and how.
 4. Spreadsheet cells with formulas update in real-time. See [Loading Discogs Data](#loading-discogs-data) for which fields have formulas and what they calculate.
