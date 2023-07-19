@@ -68,7 +68,7 @@ The script automatically adds a custom menu above the spreadsheet called "Vinyl 
 - **Reset Structure**: This will only reset the spreadsheet's structure back to what is coded. See below for what that structure is.
 - **Load User Collection**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
 
-## Collection Section
+## Collection
 The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only the user would know, requiring them to manually populate if they wish. Below is a description of what each column represents:
 - **Discogs ID**: This is the unique number that identifies the release in Discogs. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
 - **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in the user's Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
