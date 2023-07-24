@@ -50,6 +50,8 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 8. If too much time has passed, you may need to click Run again in Apps Script. Once the script is complete, you can go back to the spreadsheet to see the pre-defined structure that the script has built.
 
+![Initial Structure](assets/InitialStructure.png)
+
 9. Refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the option to run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
 
 ![Menu](assets/Menu.png)
