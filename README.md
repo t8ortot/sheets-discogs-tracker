@@ -19,28 +19,28 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 ![New Blank Spreadsheet](assets/NewBlankSpreadsheet.png)
 
-3. In the menu bar, navigate to Extensions -> Apps Script. A new window should open with a text editor for Apps Script.
+2. In the menu bar, navigate to Extensions -> Apps Script. A new window should open with a text editor for Apps Script.
 
 ![Extension -> Apps Script](assets/ExtensionAppsScript.png)
 
-4. Copy the code from the vinyl.js file in this GitHub repository and paste it into the Apps Script text editor, replacing any code that is already there. Then hit the save button at the top of the text editor.
+3. Copy the code from the vinyl.js file in this GitHub repository and paste it into the Apps Script text editor, replacing any code that is already there. Then hit the save button at the top of the text editor.
 
 ![Save Project](assets/SaveProject.png)
 
-5. After you save, a dropdown should be available next to the Debug button. Make sure this dropdown has the "updateSpreadsheet" option selected.
+4. After you save, a dropdown should be available next to the Debug button. Make sure this dropdown has the "updateSpreadsheet" option selected.
 
 ![Select Update Spreadsheet](assets/SelectUpdateSpreadsheet.png)
 
-6. Click Run. You will be prompted to review the necessary permissions this script needs in order to run. Review and approval are only needed on the first run. Choose the profile that the sheet belongs to if presented with multiple profiles.
+5. Click Run. You will be prompted to review the necessary permissions this script needs in order to run. Review and approval are only needed on the first run. Choose the profile that the sheet belongs to if presented with multiple profiles.
 
 ![Review Permissions](assets/ReviewPermissions.png)
 
-7. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)". Since you are running this code yourself, it is not verified by Google, thus triggering the warning.
+6. When you reach a screen with the text "Google hasn't verified this app," click the small "Advanced" button and then click "Go to Project (unsafe)". Since you are running this code yourself, it is not verified by Google, thus triggering the warning.
 
 ![Advanced](assets/Advanced.png) 
 ![Go To Project](assets/GoToProject.png)
 
-8. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
+7. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
    - Let the script have full control over the spreadsheet so it can make changes automatically.
    - Let the script make external web requests to the Discogs API to import your collection and pricing data.
    - Let the script display errors to you when something goes wrong.
@@ -48,13 +48,13 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 ![Allow](assets/Allow.png)
 
-9. If too much time has passed, you may need to click Run again in Apps Script. Once the script is complete, you can go back to the spreadsheet to see the pre-defined structure that the script has built.
+8. If too much time has passed, you may need to click Run again in Apps Script. Once the script is complete, you can go back to the spreadsheet to see the pre-defined structure that the script has built.
 
-10. Refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the option to run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
+9. Refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the option to run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
 
 ![Menu](assets/Menu.png)
 
-11. You are now ready to start using the script! You can learn how to add your collection to the spreadsheet using the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading other sections to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to add a few more advanced features to the script that could not be added automatically, see the [Advanced Setup](#advanced-setup) section for more information.
+10. You are now ready to start using the script! You can learn how to add your collection to the spreadsheet using the [Adding To Your Collection](#adding-to-your-collection) section below. You can also continue reading other sections to learn how the script works and to use it most effectively. Visit back here for future updates to the script and documentation. If you would like to add a few more advanced features to the script that could not be added automatically, see the [Advanced Setup](#advanced-setup) section for more information.
 
 # Updating The Script
 You may want to periodically update the script to adopt new features or bug fixes. While it is not currently possible to get updates automatically, you can optionally update your script manually to the latest version for new features. Official updates to the script can only be found in this GitHub repository. Since there is no guarantee of compatibility between versions it is highly recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would build with the latest version of the script, and then manually migrate your data over accordingly. The preservation of your data is solely your responsibility. You are also responsible for maintaining any modifications you make to the script, if any.
