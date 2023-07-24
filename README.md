@@ -78,7 +78,7 @@ The script will build an area on the left side where information about your viny
 - **Tax**: This is where you manually put the tax cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Shipping**: This is where you manually put the shipping cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Total**: This is automatically calculated by the script and is equal to the sum of the Price, Tax, and Shipping costs of the item. This value is used to determine the color of the Discogs Lowest cell.
-- **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
+- **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
 - **Reload Difference**: This is automatically populated with the amount that the price has changed since the last time the script updated the row.
 - **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
 - **Notes**: This is where notes about the item can be manually entered. This is only for your own records and is not used by the script for any reason.
@@ -111,15 +111,15 @@ You can add items to the spreadsheet with or without a Discogs ID manually. The 
 Columns that are marked with a (M) always require manual input. Please see [Collection](#collection) for an explanation of each column.
 
 # Loading Discogs Data
-Every time the script is run, each item that contains a Discogs ID and a Last Reload Date not equal to today will load or calculate all fields that are marked with an (A). This action overwrites any data that was previously populated.
+Every time the script runs, each item that contains a Discogs ID and a Last Reload Date not equal to today will update all fields that are marked with an (A). This action overwrites any data that was previously populated.
 
-**:bangbang: IMPORTANT NOTE :bangbang:**: Due to limitations in how many times you can get data from Discogs API, in combination with Google Apps Script's strict 6-minute timer (unless you run this from a Google Workspace account), the script can only update approximately 135 items per run. Once your collection exceeds this size, the script will have to be run more than once to update all rows. See [Script Scheduling](#script-scheduling) to get the script to keep retrying on an interval until all rows are updated. 
+**:bangbang: IMPORTANT NOTE :bangbang:**: Due to limitations on how many times you can get data from Discogs API, in combination with Google Apps Script's strict 6-minute timer (unless you run this from a Google Workspace account), the script can only update approximately 135 items per run. Once your collection exceeds this size, the script will have to be run more than once to update all rows. See [Script Scheduling](#script-scheduling) to get the script to keep retrying on an interval until all rows are updated. 
 
 The following data is reloaded from Discogs in the following way:
 - **Artist**: Populated using the first name mentioned for the release in Discogs, which is usually the main artist/contributor. Artists that have the same name as other artists are denoted with a number in Discogs, but this number is trimmed off when added to the spreadsheet.
 - **Album**: Populated with the album name displayed on the release page.
 - **Discogs Lowest**: Populates with the lowest listed price on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. If nothing is listed, then the value is set to $0.00.
-- **Reload Difference**: Populates with the change in Discogs Lowest amount since the last time the script ran.
+- **Reload Difference**: Populates with the change in Discogs Lowest amount since the last time the script updated the row.
 
 # Advanced Setup
 There are a few features you may add yourself using the instructions below. These are mostly quality-of-life improvements that have not or cannot be integrated into the script itself.
@@ -146,6 +146,9 @@ Can I run the script without going to Apps Script?
 
 Why doesn't my collection import automatically?
 - Either your collection in Discogs is set to private, your collection is empty, all items in your collection have already been added, or you have input an invalid username.
+
+Why do some of my items have the Discogs Lowest set to $0.00?
+- This happens when nothing is listed, therefore there is nothing to show. This can also happen if you manually entered an invalid Discogs ID.
 
 
 # Feature Request List
