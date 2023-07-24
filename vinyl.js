@@ -64,7 +64,7 @@ const infoBoxColumnOffset = sortableColumnNames.length + 2;
 function onOpen() {
   var ui = SpreadsheetApp.getUi();
   ui.createMenu('Vinyl Tracker')
-      .addItem('Run Whole Script', 'updateSpreadsheet')
+      .addItem('Run Script', 'updateSpreadsheet')
       .addItem('Reset Structure', 'normalizeSheetStructure')
       .addItem('Load New Discog Items', 'loadUserCollection')
       .addToUi();
