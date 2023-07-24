@@ -3,15 +3,15 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 # Main Features
 - Automatically builds, maintains, and formats the spreadsheet's structure.
-- Automatically imports user's collection data from Discogs.
-- Allows users to input and save their purchase stats, such as date of purchase, price, tax, shipping, etc.
+- Automatically imports your collection data from Discogs.
+- Allows you to input and save your purchase stats, such as date of purchase, price, tax, shipping, etc.
 - Automatically gets the lowest listed price on Discogs for each item.
 - Automatically updates cell colors to visually indicate profit/loss percentages.
 - Automatically calculates collection's total cost and minimum value (using lowest listed prices).
 
 # Outline of Script Steps
 1. **Normalizes Spreadsheet**: Maintains and corrects the structure of the spreadsheet to how it was designed in the code. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure. See [Customizing Structure](#customizing-structure) for technical instructions to make the spreadsheet fit your needs.
-2. **Loads Discogs Collection**: Inserts new rows for each item in the user's Discogs collection that is not already in the spreadsheet. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
+2. **Loads Discogs Collection**: Insert new rows for each item in your Discogs collection that is not already in the spreadsheet. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
 3. **Loads Discogs Data**: Updates each item with current data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for what data is taken from Discogs and how it is used to update the spreadsheet.
 
 # Getting Started
@@ -42,7 +42,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 8. A popup saying "Project wants to access your Google Account." Click "Allow." Permissions are needed to:
    - Let the script have full control over the spreadsheet so it can make changes automatically.
-   - Let the script make external web requests to the Discogs API to import user and pricing data.
+   - Let the script make external web requests to the Discogs API to import your collection and pricing data.
    - Let the script display errors to you when something goes wrong.
    - Let the script build a custom menu to run the script easier.
 
@@ -69,27 +69,29 @@ The script automatically adds a custom menu above the spreadsheet called "Vinyl 
 - **Load User Collection**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
 
 ## Collection
-The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only the user would know, requiring them to manually populate if they wish. Below is a description of what each column represents:
+The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only you would know, requiring you to manually populate if you wish. Below is a description of what each column represents:
 - **Discogs ID**: This is the unique number that identifies the release in Discogs. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
-- **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in the user's Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
-- **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in the user's Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
-- **Purchased Date**: This is the date the item was purchased. This is only for the user's own records and is not used by the script for any reason.
-- **Price**: This is where the user puts the price they paid for the item, pre-tax/shipping. If the user does not wish to break apart the pricing so granularly, they can just put the total cost here instead.
-- **Tax**: This is where the user puts the tax cost for the item. This field can be blank if the user does not wish to granularly break apart costs.
-- **Shipping**: This is where the user puts the shipping cost for the item. This field can be blank if the user does not wish to granularly break apart costs.
+- **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
+- **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
+- **Purchased Date**: This is the date the item was purchased. This is only for your own records and is not used by the script for any reason.
+- **Price**: This is where you put the price you paid for the item, pre-tax/shipping. If you do not wish to store the costs in such detail, you can just put the total cost here instead.
+- **Tax**: This is where you put the tax cost for the item. This field can be blank if you do not wish to store your costs in detail.
+- **Shipping**: This is where you put the shipping cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Total**: This is automatically calculated by the script and is equal to the sum of the Price, Tax, and Shipping costs of the item. This value is used to determine the color of the Discogs Lowest cell.
 - **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
 - **Reload Difference**: This is automatically populated with the amount that the price has changed since the last time the script updated the row.
 - **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
-- **Notes**: This is where notes about the item can be stored. This is only for the user's own records and is not used by the script for any reason.
+- **Notes**: This is where notes about the item can be stored. This is only for your own records and is not used by the script for any reason.
 
 ## Info Box
-The script automatically creates an info box on the right side of the [Collection Section](#collection-section). Below is what each row of the info bow is meant to represent:
-- Item Investment: This is automatically populated by calculating the sum of all values in the Price column. This is meant to represent what you paid for your collection prior to tax and shipping costs.
-- Total Investment: This is automatically populated by calculating the sum of all values in the Total column. This is meant to represent what you paid for your collection in total, including tax and shipping.
-- Total Discogs Lowest: This is automatically populated by calculating the sum of all values in the Discogs Lowest column. This is meant to loosely represent your collection's minimum value.
-- Total Reload Difference: This is automatically populated by calculating the sum of all values in the Reload Difference column. This is meant to represent how much your collection's value has changed since the last time you ran the script.
-- Discogs Username: This is where you would put your Discogs username so the script can manually import your collection for you.
+The script will build an info box to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. Below is a description of what each row represents:
+### Summary Info
+- **Item Investment**: This is the sum of all values in the Price column. If prices are stored in detail, then this can represent the total amount of money spent on items before tax and shipping, otherwise, this value will be equal to Total Investment.
+- **Total Investment**: This is the sum of all values in the Total column. This can represent the total amount of money spent on items, including tax and shipping.
+- **Total Discogs Lowest**: This is the sum of all values in the Discogs Lowest column. This represents the minimum amount of money your collection is currently selling for. This should not be interpreted as collection value, since it is not calculated based on any sold prices.
+- **Total Reload Difference**: This is the sum of all values in the Reload Difference column. It shows the total amount your collection's value has shifted since the last time the script updated the rows.
+### Settings
+- **Discogs Username**: This is where you would put your Discogs username so the script can manually import your collection for you.
 
 # Adding To Your Collection
 There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
