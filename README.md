@@ -74,14 +74,14 @@ The script will build an area on the left side where information about your viny
 - **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
 - **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
 - **Purchased Date**: This is the date the item was purchased. This is only for your own records and is not used by the script for any reason.
-- **Price**: This is where you put the price you paid for the item, pre-tax/shipping. If you do not wish to store the costs in such detail, you can just put the total cost here instead.
-- **Tax**: This is where you put the tax cost for the item. This field can be blank if you do not wish to store your costs in detail.
-- **Shipping**: This is where you put the shipping cost for the item. This field can be blank if you do not wish to store your costs in detail.
+- **Price**: This is where you manually put the price you paid for the item, pre-tax/shipping. If you do not wish to store the costs in such detail, you can just put the total cost here instead.
+- **Tax**: This is where you manually put the tax cost for the item. This field can be blank if you do not wish to store your costs in detail.
+- **Shipping**: This is where you manually put the shipping cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Total**: This is automatically calculated by the script and is equal to the sum of the Price, Tax, and Shipping costs of the item. This value is used to determine the color of the Discogs Lowest cell.
 - **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
 - **Reload Difference**: This is automatically populated with the amount that the price has changed since the last time the script updated the row.
 - **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
-- **Notes**: This is where notes about the item can be stored. This is only for your own records and is not used by the script for any reason.
+- **Notes**: This is where notes about the item can be manually entered. This is only for your own records and is not used by the script for any reason.
 
 ## Info Box
 The script will build an info box to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. Below is a description of what each row represents:
@@ -94,23 +94,21 @@ The script will build an info box to the right of the [Collection](#collection).
 - **Discogs Username**: This is where you would put your Discogs username so the script can manually import your collection for you.
 
 # Adding To Your Collection
-There are two ways to import your collection into the spreadsheet, automatically or manually. A third option is being considered to be able to add a Discogs collection using the Discogs export file but has not yet been developed.
+There are currently two methods you can use to import your collection, automatically or manually. There will always be a manual input needed for cost information, but you can leverage automation to fill in a lot of information from Discogs.
 
 ## Automatic Discogs Import
-The easiest way to bring your collection into the spreadsheet is to let the script import your Discogs collection automatically. You can do this by adding your username into the Info box on the right side for "Discogs Username", and then click Run in Apps Script.
+The easiest way to put your collection into the spreadsheet is to let the script import your Discogs collection automatically. After satisfying the prerequisite below, this can be done by adding your username to the Discogs Username row of the [Info Box](#info-box) and then running the script.
 
 ### Prerequisite
-A prerequisite in order to do this is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import).
+A prerequisite for this to work properly is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import).
 
 ### What Happens
-When a username has been added to the spreadsheet, every time the script is run it will automatically add the Discogs IDs for all the items in your Discogs collection. The script ONLY adds IDs if they are not already in the spreadsheet. This behavior requires you to add duplicates manually if they are in your collection. Also, the script NEVER removes items, even if they are not in your Discogs collection. Therefore, items can only be deleted from the spreadsheet manually. If nothing is being added, then either your collection in Discogs is set to private, your collection is empty, all items in your collection have already been added, or you have input an invalid username.
-
-Once all the Discogs IDs are added, the script begins to load Discogs data for each item. See the section below for [Loading Discogs Data](#loading-discogs-data).
+When a username has been added to the spreadsheet, the script will automatically add the Discogs IDs for all the items in your Discogs collection. The script will only add new Discogs IDs for items not already in the spreadsheet. The script never removes items when they are no longer in your Discogs collection. Therefore, items can only be deleted from the spreadsheet manually.
 
 ## Manual Import
-You can manually add items to the spreadsheet with or without a Discogs ID. The Discogs ID is the number that can be found in the URL of a release, like so: discogs.com/[Discogs ID]-Artist-Album. When an item is added without a Discogs ID, the script will highlight the row the next time it runs. Once a Discogs ID is added, the script will remove the highlight the next time it is run. An example use of this feature is you may add items by artist/album name that you have ordered but have not yet received. Once you receive the item, you can add its Discogs ID to the row.
+You can add items to the spreadsheet with or without a Discogs ID manually. The Discogs ID is the number that can be found in the URL of a release, like so: discogs.com/[Discogs ID]-Artist-Album. When an item is added without a Discogs ID, the script will highlight the row the next time it runs to indicate it's missing. Once a Discogs ID is added, the script will remove the highlight the next time it runs. This allows you to add rows for items that you have ordered, but have not yet added to your collection in Discogs.
 
-There are certain fields that always require manual input because only you would know their values. Column headers that require manual input are marked with an (M), which includes the price and purchased date columns. If you do not see the marks, they are most likely hidden behind the filter buttons, so you may have to expand the column widths temporarily. 
+Columns that are marked with a (M) always require manual input. Please see [Collection](#collection) for an explanation of each column.
 
 # Loading Discogs Data
 Every time the script is run, each item that contains a Discogs ID and a Last Reload Date not equal to today will load or calculate all fields that are marked with an (A). This action overwrites any data that was previously populated.
@@ -146,6 +144,9 @@ Can my data be sorted?
 Can I run the script without going to Apps Script?
 - Yes! A custom menu called "Vinyl Tracker" loads into the spreadsheet a few seconds after each time the page is refreshed. Using this custom menu, you can run the script and select parts of it at any time.
 
+Why doesn't my collection import automatically?
+- Either your collection in Discogs is set to private, your collection is empty, all items in your collection have already been added, or you have input an invalid username.
+
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
@@ -162,3 +163,4 @@ These are features that have either been thought of or requested. They are consi
 - Set automatic columns to colors that represent that they are not editable.
 - Add a feature to send email reports
 - Add menu option to only update Discogs lowest
+- Track the number of items in Discogs collection to handle duplicates
