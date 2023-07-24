@@ -52,7 +52,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 
 ![Initial Structure](assets/InitialStructure.png)
 
-9. Refresh the page. A few seconds after refreshing a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the option to run the entire script or select parts of it without having to go back to Apps Script. You may now close the Apps Script window. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
+9. Refresh the spreadsheet page. Doing so will close the Apps Script window and a few seconds later a "Vinyl Tracker" menu will appear at the top of the spreadsheet. From here, you will have the ability to run the entire script or select parts of it without having to go back to Apps Script. **Note**: This custom menu always takes a few seconds to load after each time the page is refreshed.
 
 ![Menu](assets/Menu.png)
 
