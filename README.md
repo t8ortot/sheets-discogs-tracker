@@ -127,8 +127,14 @@ The following data is reloaded from Discogs in the following way:
 There are a few features you may add yourself using the instructions below. These are mostly quality-of-life improvements that have not or cannot be integrated into the script itself.
 
 ## Script Scheduling
-Add steps for scheduling
-note that reload date prevents loading more than once
+If you would like to schedule the script to run on an interval, you can do so by following the instructions below. This is useful if you want to have the data in your spreadsheet to be up to date. It is also extremely useful if the size of your collection exceeds the limit of a single run (approximately 135 items). To enable scheduling:
+1. Open Extension->Apps Script from your spreadsheet.
+2. Click the clock icon, which represents Triggers.
+3. Click Add Trigger.
+4. You may copy the settings in the picture below to set up a trigger that will run the script approximately every hour, which should be able to update approximately 3,000 items per day. You may customize the interval to your individual needs. Unfortunately, it is also required to get an error report sent to your email on an interval as well, errors are inevitable after your collection reaches approximately 135 items. Setting it to notify you weekly reduces spam, and setting up a deletion rule in your email eliminates it entirely.
+5. Then click Save. You should see a new trigger listed. Now wait for the interval you configured to pass to verify that the trigger is working. Once confirmed, your spreadsheet will now update automatically on an interval!
+
+**NOTE**: The script uses the Last Reload Date to determine if the row should be updated, which prevents the row from being updated more than once per day.
 
 ## Customizing Structure
 Add steps to customize sheet structure in code. note warnings about changes to structure could cause messes that they would have to clean up.
@@ -169,3 +175,4 @@ These are features that have either been thought of or requested. They are consi
 - Add a feature to send email reports
 - Add menu option to only update Discogs lowest
 - Track the number of items in Discogs collection to handle duplicates
+- Error handling so script does not stop on failed call
