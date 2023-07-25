@@ -121,7 +121,6 @@ function normalizeSheetStructure() {
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
-    sheet.autoResizeColumns(infoBoxColumnOffset, 2);
 }
 
 function createInfoBox(){
