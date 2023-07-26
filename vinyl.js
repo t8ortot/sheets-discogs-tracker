@@ -57,7 +57,7 @@ const TOTAL_RELOAD_DIFF = "Total Reload Difference (A)";
 //You may alter which rows appear in the Info box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
 const infoRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF, USERNAME];
-const infoBoxRowOffset = 2;
+const infoBoxRowOffset = 3;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
 
@@ -112,10 +112,14 @@ function normalizeSheetStructure() {
         initTotalCostFormula(i);
     }
 
-    if (sheet.getFilter() != null) {
-        sheet.getFilter().remove();
-    }
+
+    //Reset sticky row and filter
+    sheet.setFrozenRows(0);
+    if (sheet.getFilter() != null) {sheet.getFilter().remove();}
+
+    //Initialize filter and sticky row.
     sheet.getRange(1, 1, data.length, sortableColumnNames.length).createFilter();
+    sheet.setFrozenRows(1);
 
     createInfoBox();
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
