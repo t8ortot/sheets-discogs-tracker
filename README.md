@@ -10,7 +10,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 - Automatically calculates collection's total cost and minimum value (using lowest listed prices).
 
 # Outline of Script Steps
-1. **Normalizes Spreadsheet**: Maintains and corrects the structure of the spreadsheet to how it was designed in the code. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure. See [Customizing Structure](#customizing-structure) for technical instructions to make the spreadsheet fit your needs.
+1. **Normalizes Spreadsheet**: Maintains and corrects the structure of the spreadsheet to how it was designed in the code. See [Explanation of Spreadsheet Structure](#explanation-of-spreadsheet-structure) to learn about the structure.
 2. **Loads Discogs Collection**: Insert new rows for each item in your Discogs collection that is not already in the spreadsheet. See [Automatic Discogs Import](#automatic-discogs-import) for instructions to start automatically importing your Discogs collection.
 3. **Loads Discogs Data**: Updates each item with current data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for what data is taken from Discogs and how it is used to update the spreadsheet.
 
@@ -62,7 +62,7 @@ A Google Script project for Google Sheets that can be used to keep an inventory 
 You may want to periodically update the script to adopt new features or bug fixes. While it is not currently possible to get updates automatically, you can optionally update your script manually to the latest version for new features. Official updates to the script can only be found in this GitHub repository. Since there is no guarantee of compatibility between versions it is highly recommended that you follow the instructions in the [Getting Started](#getting-started) section again and create a new spreadsheet from scratch, which you would build with the latest version of the script, and then manually migrate your data over accordingly. The preservation of your data is solely your responsibility. You are also responsible for maintaining any modifications you make to the script, if any.
 
 # Explanation of Spreadsheet Structure
-The script automatically builds and maintains a structure for itself in the spreadsheet. This structure is coded into the script, therefore any changes you make to the structure within the spreadsheet will be reverted back to the coded structure. If you would like to make changes to the structure, please see [Customizing Structure](#customizing-structure).
+The script automatically builds and maintains a structure for itself in the spreadsheet. This structure is coded into the script, therefore any changes you make to the structure within the spreadsheet will be reverted back to the coded structure. Permanent changes to the structure can be made by altering the script, however, this is done at your own risk.
 
 ## Vinyl Tracker Menu
 The script automatically adds a custom menu above the spreadsheet called "Vinyl Tracker". This menu always takes a few seconds to appear after opening or refreshing the spreadsheet. This menu allows you to run the entire script or only certain pieces of it. Below is a description of what each option does:
@@ -148,15 +148,12 @@ If you would like to schedule the script to run on an interval, you can do so by
 
 **NOTE**: The script uses the Last Reload Date to determine if the row should be updated, which prevents the row from being updated more than once per day.
 
-## Customizing Structure
-Add steps to customize sheet structure in code. note warnings about changes to structure could cause messes that they would have to clean up.
-
 # Frequently Asked Questions
 How does the script get updated?
 - Updates to the script will be posted in this repository. Since the setup of this script is run manually as a copy in Apps Script, it does not and cannot have any ties to GitHub. In order to get and apply updates to the script, you will have to come back here to get the latest updates yourself. Updating is not required, but new features may be available that you may find useful. See [Updating The Script](#updating-the-script) for more information on how to update.
 
 Why does the script keep reverting my structural changes to the spreadsheet?
-- The script is hard-coded to maintain a certain structure so it knows where to put information properly labeled. Changes to the structure, such as adding or removing columns, can be done by altering the script itself. See [Customizing Structure](#customizing-structure) for more information.
+- The script is hard-coded to maintain a certain structure so it knows where to put information properly labeled. Changes to the structure, such as adding or removing columns, can be done by altering the script itself, however, changes are made at your own risk and should only be done if you know how to code.
 
 Can my data be sorted?
 - Yes! In fact, the script does not put the data into the spreadsheet in any particular order, so it is recommended that you sort your data often by using the filters available on the column headers. This is because the script is unable to detect how you have your data filtered/sorted, so instead of forcing its own filter upon you while updating, it will add new items to the bottom of the spreadsheet. Once re-sorted, these new items will fall into their correct places.
