@@ -107,6 +107,8 @@ A prerequisite for this to work properly is to set your Discogs collection to be
 ### What Happens
 When a username has been added to the spreadsheet, the script will automatically add the Discogs IDs for all the items in your Discogs collection. The script will only add new Discogs IDs for items not already in the spreadsheet. The script never removes items when they are no longer in your Discogs collection. Therefore, items can only be deleted from the spreadsheet manually.
 
+**NOTE**: The script cannot identify items you have entered manually without a Discogs ID, therefore all new items are added to the bottom. You will have to move the Discogs ID of the new row into the row that you manually entered. Then delete the extra row created by the script. The next time the script runs, it will clean up your manually entered row with Discogs data relating to the ID. See [Loading Discogs Data](#loading-discogs-data) for more information on what this means.
+
 ## Manual Import
 You can add items to the spreadsheet with or without a Discogs ID manually. The Discogs ID is the number that can be found in the URL of a release, like so: discogs.com/[Discogs ID]-Artist-Album. When an item is added without a Discogs ID, the script will highlight the row the next time it runs to indicate it's missing. Once a Discogs ID is added, the script will remove the highlight the next time it runs. This allows you to add rows for items that you have ordered, but have not yet added to your collection in Discogs.
 
