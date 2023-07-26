@@ -187,3 +187,4 @@ These are features that have either been thought of or requested. They are consi
 - Add menu option to only update Discogs lowest
 - Track the number of items in Discogs collection to handle duplicates
 - Error handling so script does not stop on failed call
+- Add the ordered date with colors for how late it is.
