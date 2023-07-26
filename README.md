@@ -188,3 +188,5 @@ These are features that have either been thought of or requested. They are consi
 - Track the number of items in Discogs collection to handle duplicates
 - Error handling so script does not stop on failed call
 - Add the ordered date with colors for how late it is.
+- Freeze top row to show column headers when scrolling
+- Add a way to tell if there have been updates to the script.
