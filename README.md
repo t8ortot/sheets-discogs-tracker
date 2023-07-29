@@ -94,6 +94,11 @@ The script will build an info box to the right of the [Collection](#collection).
 - **Total Reload Difference**: This is the sum of all values in the Reload Difference column. It shows the total amount your collection's value has shifted since the last time the script updated the rows.
 ### Settings
 - **Discogs Username**: This is where you would put your Discogs username so the script can manually import your collection for you.
+- **Minimum Color**: This is the color that the Discogs Lowest cell is set to when the loss equals or exceeds the negative threshold.
+- **Neutral Color**: This is the color that the Discogs Lowest cell is set to when the profit/loss is 0, meaning that it is equal to the total paid.
+- **Maximum Color**: This is the color that the Discogs Lowest cell is set to when the profit equals or exceeds the positive threshold.
+- **Zero Color**: This is the color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price.
+- **Missing ID Color**: This is the color that the row is set to when there is no Discogs ID present.
 
 # Adding To Your Collection
 There are currently two methods you can use to import your collection, automatically or manually. There will always be a manual input needed for cost information, but you can leverage automation to fill in a lot of information from Discogs.
@@ -175,7 +180,7 @@ These are features that have either been thought of or requested. They are consi
 - Ability to switch currency. Currently only outputs USD.
 - Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
 - Ability to import using Discogs export .csv file.
-- Expose more settings in the Info box so the code does not need to be touched as often by the user
+- Expose threshold setting
 - Change the timing mechanism to use the rate-limiting response headers from Discogs to prevent too many request errors.
 - Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
