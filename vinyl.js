@@ -19,14 +19,15 @@ const MISSING_COLOR = [255, 179, 186]; //Red
 //These are the RGB color values that you would like to see past the bounds of the threshold margin.
 //These colors are also used to calculate the gradient color anywhere between the bound and 0.
 const MINIMUM_COLOR = [255, 179, 186]; // Red
-const ZERO_COLOR = [255, 255, 186]; // Yellow
+const NEUTRAL_COLOR = [255, 255, 186]; // Yellow
 const MAXIMUM_COLOR = [186, 255, 201]; // Green
+const ZERO_COLOR = [255,255,255]; // White
 
 const INFO_BOX_HEADER_COLOR = [169, 169, 169]; //Dark Gray
 const INFO_BOX_SUB_HEADER_COLOR = [211, 211, 211]; //Light Gray
 
 //The +/- percentage threshold is used to determine the upper and lower bounds of the calculated gradient color's profit margin.
-//Example: 0.10 mean that profits/losses of 10% or more will appear as the MAXIMUM_COLOR/MINIMUM_COLOR. A profit of 4% would show a blended color of 40% MAXIMUM_COLOR and 60% ZERO_COLOR.
+//Example: 0.10 mean that profits/losses of 10% or more will appear as the MAXIMUM_COLOR/MINIMUM_COLOR. A profit of 4% would show a blended color of 40% MAXIMUM_COLOR and 60% NEUTRAL_COLOR.
 const THRESHOLD_PERCENTAGE = 0.10;
 
 //Sortable Column Headers (Denoted with an (A) if it is automatically populated, or (M) if it requires manual input.)
@@ -230,17 +231,20 @@ function updateColor(rowNumber) {
     //This will calculate the percentage or profit or loss, keeping it within the +/- THRESHOLD_PERCENTAGE bounds to set static colors past the specified range.
     var diffPercentage = Math.max(-THRESHOLD_PERCENTAGE, Math.min((lowest / total) - 1.00, THRESHOLD_PERCENTAGE));
 
-    //if the diff is negative, we need to calculate the gradiant color between the MINUMUM_COLOR and ZERO_COLOR
-    //if the diff is positive, we need to calculate the gradiant color between the ZERO_COLOR and MAXIMUM_COLOR
-    if (diffPercentage < 0) {
-        var r = calculateGradientColor(ZERO_COLOR[0], MINIMUM_COLOR[0], ZERO_COLOR[0], diffPercentage);
-        var g = calculateGradientColor(ZERO_COLOR[1], MINIMUM_COLOR[1], ZERO_COLOR[1], diffPercentage);
-        var b = calculateGradientColor(ZERO_COLOR[2], MINIMUM_COLOR[2], ZERO_COLOR[2], diffPercentage);
+    //if the lowest value is 0, meaning there is nothing listed, the color is set to ZERO_COLOR
+    //if the diff is negative, we need to calculate the gradiant color between the MINUMUM_COLOR and NEUTRAL_COLOR
+    //if the diff is positive, we need to calculate the gradiant color between the NEUTRAL_COLOR and MAXIMUM_COLOR
+    if(lowest == 0){
+      sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(ZERO_COLOR[0], ZERO_COLOR[1], ZERO_COLOR[2]));
+    } else if (diffPercentage < 0) {
+        var r = calculateGradientColor(NEUTRAL_COLOR[0], MINIMUM_COLOR[0], NEUTRAL_COLOR[0], diffPercentage);
+        var g = calculateGradientColor(NEUTRAL_COLOR[1], MINIMUM_COLOR[1], NEUTRAL_COLOR[1], diffPercentage);
+        var b = calculateGradientColor(NEUTRAL_COLOR[2], MINIMUM_COLOR[2], NEUTRAL_COLOR[2], diffPercentage);
         sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(r, g, b));
     } else {
-        var r = calculateGradientColor(MAXIMUM_COLOR[0], ZERO_COLOR[0], ZERO_COLOR[0], diffPercentage)
-        var g = calculateGradientColor(MAXIMUM_COLOR[1], ZERO_COLOR[1], ZERO_COLOR[1], diffPercentage)
-        var b = calculateGradientColor(MAXIMUM_COLOR[2], ZERO_COLOR[2], ZERO_COLOR[2], diffPercentage)
+        var r = calculateGradientColor(MAXIMUM_COLOR[0], NEUTRAL_COLOR[0], NEUTRAL_COLOR[0], diffPercentage)
+        var g = calculateGradientColor(MAXIMUM_COLOR[1], NEUTRAL_COLOR[1], NEUTRAL_COLOR[1], diffPercentage)
+        var b = calculateGradientColor(MAXIMUM_COLOR[2], NEUTRAL_COLOR[2], NEUTRAL_COLOR[2], diffPercentage)
         sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(r, g, b));
     }
 }
