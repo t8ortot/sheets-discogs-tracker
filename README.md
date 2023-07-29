@@ -80,7 +80,7 @@ The script will build an area on the left side where information about your viny
 - **Tax**: This is where you manually put the tax cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Shipping**: This is where you manually put the shipping cost for the item. This field can be blank if you do not wish to store your costs in detail.
 - **Total**: This is automatically calculated by the script and is equal to the sum of the Price, Tax, and Shipping costs of the item. This value is used to determine the color of the Discogs Lowest cell.
-- **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%.
+- **Discogs Lowest**: This is automatically populated with the lowest listed price for the item on Discogs. This is not to be mistaken with the last sold price, which is data that cannot be accessed using the API. The color of this cell is determined by the profit/loss percentage calculated by comparing the Total and Discogs Lowest values, reaching the caps at +/- 10%. If there is no listing for the item, it is set to $0.00 and white.
 - **Reload Difference**: This is automatically populated with the amount that the price has changed since the last time the script updated the row.
 - **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
 - **Notes**: This is where notes about the item can be manually entered. This is only for your own records and is not used by the script for any reason.
@@ -180,7 +180,6 @@ These are features that have either been thought of or requested. They are consi
 - Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
      - This would allow importing of user lists.
-- Have Discogs Lowest set to a neutral color when there are no listings and lowest gets set to $0.00.
 - See if automatic fields can be set to protect so the user doesn't touch them since their changes would be irrelevant.
 - Set automatic columns to colors that represent that they are not editable.
 - Add a feature to send email reports
