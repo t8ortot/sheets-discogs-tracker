@@ -57,15 +57,6 @@ const infoBoxRowOffset = 4;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
 
-function onOpen() {
-  var ui = SpreadsheetApp.getUi();
-  ui.createMenu('Vinyl Tracker')
-      .addItem('Run Script', 'updateSpreadsheet')
-      .addItem('Reset Structure', 'normalizeSheetStructure')
-      .addItem('Load New Discog Items', 'loadUserCollection')
-      .addToUi();
-}
-
 //This is the main method that runs the script.
 //Google has a strict 6-minute time limit for scripts.
 //Due to the usage throttling of the Discogs API, once your collection grows past approximately 120 items, this script will have to run multiple times to update all rows.
@@ -73,24 +64,17 @@ function updateSpreadsheet() {
     reloadSpreadsheet();
     normalizeSheetStructure();
     loadUserCollection();
-    for (var i = 1; i < data.length; i++) {
-        Logger.log(DISCOGS_ID + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM + ': ' + data[i][columnIndexFor(ALBUM)]);
-        if (hasDiscogsItemID(i)) {
-            if (shouldUpdateRow(data, i)) {
-                var oldLowest = data[i][columnIndexFor(DISCOGS_LOWEST)];
-                resetRowColor(i + 1);
-                updateRowWithDiscogsData(i + 1);
-                reloadSpreadsheet();
-                updateColor(i + 1);
-                updateRefreshDiff(oldLowest, i + 1)
-                updateRefreshDate(i + 1);
-                SpreadsheetApp.flush();
-                Utilities.sleep(2000);
-            }
-        } else {
-            setRowToMissingColor(i + 1);
-        }
-    }
+    loadDiscogsData();
+}
+
+function onOpen() {
+  var ui = SpreadsheetApp.getUi();
+  ui.createMenu('Vinyl Tracker')
+      .addItem('Run Script', 'updateSpreadsheet')
+      .addItem('Reset Structure', 'normalizeSheetStructure')
+      .addItem('Load New Discog Items', 'loadUserCollection')
+      .addItem('Load Discog Data', 'loadDiscogsData')
+      .addToUi();
 }
 
 //Returns true if row has a discogs ID to load data with
@@ -186,6 +170,27 @@ function loadUserCollection(){
       url = json.pagination.urls.next;
     } while (url != null)
   }
+}
+
+function loadDiscogsData(){
+  for (var i = 1; i < data.length; i++) {
+        Logger.log(DISCOGS_ID + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM + ': ' + data[i][columnIndexFor(ALBUM)]);
+        if (hasDiscogsItemID(i)) {
+            if (shouldUpdateRow(data, i)) {
+                var oldLowest = data[i][columnIndexFor(DISCOGS_LOWEST)];
+                resetRowColor(i + 1);
+                updateRowWithDiscogsData(i + 1);
+                reloadSpreadsheet();
+                updateColor(i + 1);
+                updateRefreshDiff(oldLowest, i + 1)
+                updateRefreshDate(i + 1);
+                SpreadsheetApp.flush();
+                Utilities.sleep(2000);
+            }
+        } else {
+            setRowToMissingColor(i + 1);
+        }
+    }
 }
 
 function alreadyContainsRelease(discogsID){
