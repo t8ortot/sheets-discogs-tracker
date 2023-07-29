@@ -13,16 +13,6 @@ const numberToCurrency = new Intl.NumberFormat("en-US", {
     style: "currency"
 });
 
-//This is the color that appears when a row does not have a Discogs ID to load data with.
-const MISSING_COLOR = [255, 179, 186]; //Red
-
-//These are the RGB color values that you would like to see past the bounds of the threshold margin.
-//These colors are also used to calculate the gradient color anywhere between the bound and 0.
-const MINIMUM_COLOR = [255, 179, 186]; // Red
-const NEUTRAL_COLOR = [255, 255, 186]; // Yellow
-const MAXIMUM_COLOR = [186, 255, 201]; // Green
-const ZERO_COLOR = [255,255,255]; // White
-
 const INFO_BOX_HEADER_COLOR = [169, 169, 169]; //Dark Gray
 const INFO_BOX_SUB_HEADER_COLOR = [211, 211, 211]; //Light Gray
 
@@ -54,11 +44,16 @@ const ITEM_INVESTMENT = "Item Investment (A)";
 const TOTAL_INVESTMENT = "Total Investment (A)";
 const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest (A)";
 const TOTAL_RELOAD_DIFF = "Total Reload Difference (A)";
+const MINIMUM_COLOR = "Minimum Color (M)";
+const NEUTRAL_COLOR = "Neutral Color (M)";
+const MAXIMUM_COLOR = "Maximum Color (M)";
+const ZERO_COLOR = "Zero Color (M)"
+const MISSING_ID_COLOR = "Missing ID Color (M)"
 
 //You may alter which rows appear in the Info box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
-const infoRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF, USERNAME];
-const infoBoxRowOffset = 3;
+const infoRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF, USERNAME, MINIMUM_COLOR, NEUTRAL_COLOR, MAXIMUM_COLOR, ZERO_COLOR, MISSING_ID_COLOR];
+const infoBoxRowOffset = 4;
 const infoBoxColumnOffset = sortableColumnNames.length + 2;
 
 
@@ -155,6 +150,22 @@ function createInfoBox(){
   sheet.getRange(infoBoxRowOffset + rowIndexFor(TOTAL_DISCOGS_LOWEST), infoBoxColumnOffset + 1).setFormula(totalDiscogsLowestFormula);
   sheet.getRange(infoBoxRowOffset + rowIndexFor(TOTAL_RELOAD_DIFF), infoBoxColumnOffset + 1).setFormula(totalReloadDiffFormula);
 
+  setColorDefault(MINIMUM_COLOR, "#ffb3ba");
+  setColorDefault(NEUTRAL_COLOR, "#ffffba");
+  setColorDefault(MAXIMUM_COLOR, "#baffc9");
+  setColorDefault(ZERO_COLOR, "#ffffff");
+  setColorDefault(MISSING_ID_COLOR, "#ffb3ba");
+}
+
+function setColorDefault(colorSetting, defaultColorHex){
+  var valueCell = sheet.getRange(infoBoxRowOffset + rowIndexFor(colorSetting), infoBoxColumnOffset + 1);
+  
+  if (valueCell.getValue() != '' && defaultColorHex != valueCell.getBackground()) {
+    valueCell.setValue("override");
+  } else {
+    valueCell.setBackground(defaultColorHex);
+    valueCell.setValue("default");
+  }
 }
 
 function loadUserCollection(){
@@ -202,7 +213,8 @@ function convertIndexToLetter(i){
 
 //Sets whole row to MISSING_COLOR
 function setRowToMissingColor(rowNumber) {
-    sheet.getRange(rowNumber, 1, 1, sortableColumnNames.length).setBackground(rgbToHex(MISSING_COLOR[0], MISSING_COLOR[1], MISSING_COLOR[2]));
+  var missing_id_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MISSING_ID_COLOR), infoBoxColumnOffset + 1).getBackground());
+  sheet.getRange(rowNumber, 1, 1, sortableColumnNames.length).setBackground(rgbToHex(missing_id_color.r, missing_id_color.g, missing_id_color.b));
 }
 
 //Resets entire row color
@@ -227,6 +239,10 @@ function updateRowWithDiscogsData(rowNumber) {
 function updateColor(rowNumber) {
     var total = data[rowNumber - 1][columnIndexFor(TOTAL)];
     var lowest = data[rowNumber - 1][columnIndexFor(DISCOGS_LOWEST)];
+    var minimum_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MINIMUM_COLOR), infoBoxColumnOffset + 1).getBackground());
+    var neutral_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(NEUTRAL_COLOR), infoBoxColumnOffset + 1).getBackground());
+    var maximum_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MAXIMUM_COLOR), infoBoxColumnOffset + 1).getBackground());
+    var zero_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(ZERO_COLOR), infoBoxColumnOffset + 1).getBackground());
 
     //This will calculate the percentage or profit or loss, keeping it within the +/- THRESHOLD_PERCENTAGE bounds to set static colors past the specified range.
     var diffPercentage = Math.max(-THRESHOLD_PERCENTAGE, Math.min((lowest / total) - 1.00, THRESHOLD_PERCENTAGE));
@@ -235,16 +251,16 @@ function updateColor(rowNumber) {
     //if the diff is negative, we need to calculate the gradiant color between the MINUMUM_COLOR and NEUTRAL_COLOR
     //if the diff is positive, we need to calculate the gradiant color between the NEUTRAL_COLOR and MAXIMUM_COLOR
     if(lowest == 0){
-      sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(ZERO_COLOR[0], ZERO_COLOR[1], ZERO_COLOR[2]));
+      sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(zero_color.r, zero_color.g, zero_color.b));
     } else if (diffPercentage < 0) {
-        var r = calculateGradientColor(NEUTRAL_COLOR[0], MINIMUM_COLOR[0], NEUTRAL_COLOR[0], diffPercentage);
-        var g = calculateGradientColor(NEUTRAL_COLOR[1], MINIMUM_COLOR[1], NEUTRAL_COLOR[1], diffPercentage);
-        var b = calculateGradientColor(NEUTRAL_COLOR[2], MINIMUM_COLOR[2], NEUTRAL_COLOR[2], diffPercentage);
+        var r = calculateGradientColor(neutral_color.r, minimum_color.r, neutral_color.r, diffPercentage);
+        var g = calculateGradientColor(neutral_color.g, minimum_color.g, neutral_color.g, diffPercentage);
+        var b = calculateGradientColor(neutral_color.b, minimum_color.b, neutral_color.b, diffPercentage);
         sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(r, g, b));
     } else {
-        var r = calculateGradientColor(MAXIMUM_COLOR[0], NEUTRAL_COLOR[0], NEUTRAL_COLOR[0], diffPercentage)
-        var g = calculateGradientColor(MAXIMUM_COLOR[1], NEUTRAL_COLOR[1], NEUTRAL_COLOR[1], diffPercentage)
-        var b = calculateGradientColor(MAXIMUM_COLOR[2], NEUTRAL_COLOR[2], NEUTRAL_COLOR[2], diffPercentage)
+        var r = calculateGradientColor(maximum_color.r, neutral_color.r, neutral_color.r, diffPercentage)
+        var g = calculateGradientColor(maximum_color.g, neutral_color.g, neutral_color.g, diffPercentage)
+        var b = calculateGradientColor(maximum_color.b, neutral_color.b, neutral_color.b, diffPercentage)
         sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(r, g, b));
     }
 }
@@ -274,6 +290,15 @@ function componentToHex(c) {
 //Converts R, G, and B number values into hexidecimal string components, and then combines them.
 function rgbToHex(r, g, b) {
     return "#" + componentToHex(r) + componentToHex(g) + componentToHex(b);
+}
+
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? {
+    r: parseInt(result[1], 16),
+    g: parseInt(result[2], 16),
+    b: parseInt(result[3], 16)
+  } : null;
 }
 
 //Loads updated data into the data array. Required frequently so that steps can use previously updated data.
