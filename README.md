@@ -94,11 +94,11 @@ The script will build an info box to the right of the [Collection](#collection).
 - **Total Reload Difference**: This is the sum of all values in the Reload Difference column. It shows the total amount your collection's value has shifted since the last time the script updated the rows.
 ### Settings
 - **Discogs Username**: This is where you would put your Discogs username so the script can manually import your collection for you.
-- **Minimum Color**: This is the color that the Discogs Lowest cell is set to when the loss equals or exceeds the negative threshold.
-- **Neutral Color**: This is the color that the Discogs Lowest cell is set to when the profit/loss is 0, meaning that it is equal to the total paid.
-- **Maximum Color**: This is the color that the Discogs Lowest cell is set to when the profit equals or exceeds the positive threshold.
-- **Zero Color**: This is the color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price.
-- **Missing ID Color**: This is the color that the row is set to when there is no Discogs ID present.
+- **Minimum Color**: This is the color that the Discogs Lowest cell is set to when the loss equals or exceeds the negative threshold. By changing the color of this cell, you will change the color the script uses to set other cell colors throughout the spreadsheet.
+- **Neutral Color**: This is the color that the Discogs Lowest cell is set to when the profit/loss is 0, meaning that it is equal to the total paid. By changing the color of this cell, you will change the color the script uses to set other cell colors throughout the spreadsheet.
+- **Maximum Color**: This is the color that the Discogs Lowest cell is set to when the profit equals or exceeds the positive threshold. By changing the color of this cell, you will change the color the script uses to set other cell colors throughout the spreadsheet.
+- **Zero Color**: This is the color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price. By changing the color of this cell, you will change the color the script uses to set other cell colors throughout the spreadsheet.
+- **Missing ID Color**: This is the color that the row is set to when there is no Discogs ID present. By changing the color of this cell, you will change the color the script uses to set other cell colors throughout the spreadsheet.
 
 # Adding To Your Collection
 There are currently two methods you can use to import your collection, automatically or manually. There will always be a manual input needed for cost information, but you can leverage automation to fill in a lot of information from Discogs.
