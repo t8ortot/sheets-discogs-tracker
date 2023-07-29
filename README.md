@@ -68,7 +68,8 @@ The script automatically builds and maintains a structure for itself in the spre
 The script automatically adds a custom menu above the spreadsheet called "Vinyl Tracker". This menu always takes a few seconds to appear after opening or refreshing the spreadsheet. This menu allows you to run the entire script or only certain pieces of it. Below is a description of what each option does:
 - **Run Script**: This will run the entire script. Please see [Outline of Script Steps](#outline-of-script-steps) for additional information on what the entire script does.
 - **Reset Structure**: This will only reset the spreadsheet's structure back to what is coded. See below for what that structure is.
-- **Load User Collection**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
+- **Load New Discogs Items**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
+- **Load Discogs Data**: This will update all rows with a Discogs ID and Last Reload Date not equal to today's date with latest data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for more information.
 
 ## Collection
 The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only you would know, requiring you to manually populate if you wish. Below is a description of what each column represents:
@@ -188,7 +189,6 @@ These are features that have either been thought of or requested. They are consi
 - See if automatic fields can be set to protect so the user doesn't touch them since their changes would be irrelevant.
 - Set automatic columns to colors that represent that they are not editable.
 - Add a feature to send email reports
-- Add menu option to only update Discogs lowest
 - Track the number of items in Discogs collection to handle duplicates
 - Error handling so script does not stop on failed call
 - Add the ordered date with colors for how late it is.
