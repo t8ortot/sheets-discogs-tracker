@@ -72,8 +72,8 @@ function onOpen() {
   ui.createMenu('Vinyl Tracker')
       .addItem('Run Script', 'updateSpreadsheet')
       .addItem('Reset Structure', 'normalizeSheetStructure')
-      .addItem('Load New Discog Items', 'loadUserCollection')
-      .addItem('Load Discog Data', 'loadDiscogsData')
+      .addItem('Load New Discogs Items', 'loadUserCollection')
+      .addItem('Load Discogs Data', 'loadDiscogsData')
       .addToUi();
 }
 
