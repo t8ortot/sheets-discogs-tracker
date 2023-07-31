@@ -16,10 +16,6 @@ const numberToCurrency = new Intl.NumberFormat("en-US", {
 const INFO_BOX_HEADER_COLOR = [169, 169, 169]; //Dark Gray
 const INFO_BOX_SUB_HEADER_COLOR = [211, 211, 211]; //Light Gray
 
-//The +/- percentage threshold is used to determine the upper and lower bounds of the calculated gradient color's profit margin.
-//Example: 0.10 mean that profits/losses of 10% or more will appear as the MAXIMUM_COLOR/MINIMUM_COLOR. A profit of 4% would show a blended color of 40% MAXIMUM_COLOR and 60% NEUTRAL_COLOR.
-const THRESHOLD_PERCENTAGE = 0.10;
-
 //Sortable Column Headers (Denoted with an (A) if it is automatically populated, or (M) if it requires manual input.)
 const DISCOGS_ID = "Discogs ID (A)";
 const ARTIST = "Artist (A)";
@@ -38,7 +34,7 @@ const LAST_RELOAD_DATE = "Last Reload Date (A)";
 //WARNING: Altering this list after adding items will mostly likely cause a mess on said itmes that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
 const sortableColumnNames = [DISCOGS_ID, ARTIST, ALBUM, PURCHASED_DATE, PRICE, TAX, SHIPPING, TOTAL, DISCOGS_LOWEST, RELOAD_DIFF, LAST_RELOAD_DATE, NOTES];
 
-//Row titles in the Info box.=
+//Row titles in the Collection Summary
 const ITEM_INVESTMENT = "Item Investment (A)";
 const TOTAL_INVESTMENT = "Total Investment (A)";
 const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest (A)";
@@ -50,16 +46,18 @@ const summaryRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL
 const summaryBoxRowOffset = 4;
 const summaryBoxColumnOffset = sortableColumnNames.length + 2;
 
+//Row titles in the Settings
 const USERNAME = "Discogs Username (M)";
-const MINIMUM_COLOR = "Minimum Color (M)";
-const NEUTRAL_COLOR = "Neutral Color (M)";
-const MAXIMUM_COLOR = "Maximum Color (M)";
-const ZERO_COLOR = "Zero Color (M)"
+const PROFIT_LOSS_THRESHOLD = "Profit/Loss Threshold % (M)"
+const LOSS_COLOR = "Loss Color (M)";
+const BREAK_EVEN_COLOR = "Break-Even Color (M)";
+const PROFIT_COLOR = "Profit Color (M)";
+const NOT_LISTED_COLOR = "Not Listed Color (M)"
 const MISSING_ID_COLOR = "Missing ID Color (M)"
 
 //You may alter which rows appear in the Settings box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
-const settingsRows = [USERNAME, MINIMUM_COLOR, NEUTRAL_COLOR, MAXIMUM_COLOR, ZERO_COLOR, MISSING_ID_COLOR];
+const settingsRows = [USERNAME, PROFIT_LOSS_THRESHOLD, LOSS_COLOR, BREAK_EVEN_COLOR, PROFIT_COLOR, NOT_LISTED_COLOR, MISSING_ID_COLOR];
 const settingsBoxRowOffset = summaryBoxRowOffset + summaryRows.length + 1;
 const settingsBoxColumnOffset = sortableColumnNames.length + 2;
 
@@ -101,7 +99,6 @@ function normalizeSheetStructure() {
     for (var i = 2; i <= data.length; i++){
         initTotalCostFormula(i);
     }
-
 
     //Reset sticky row and filter
     sheet.setFrozenRows(0);
@@ -156,10 +153,15 @@ function createSettingsBox(){
 
   sheet.getRange(settingsBoxRowOffset, settingsBoxColumnOffset, settingsRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
-  setColorDefault(MINIMUM_COLOR, "#ffb3ba");
-  setColorDefault(NEUTRAL_COLOR, "#ffffba");
-  setColorDefault(MAXIMUM_COLOR, "#baffc9");
-  setColorDefault(ZERO_COLOR, "#ffffff");
+  if(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_LOSS_THRESHOLD), settingsBoxColumnOffset + 1).getValue() == ''){
+    sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_LOSS_THRESHOLD), settingsBoxColumnOffset + 1).setValue("10");
+  }
+  
+
+  setColorDefault(LOSS_COLOR, "#ffb3ba");
+  setColorDefault(BREAK_EVEN_COLOR, "#ffffba");
+  setColorDefault(PROFIT_COLOR, "#baffc9");
+  setColorDefault(NOT_LISTED_COLOR, "#ffffff");
   setColorDefault(MISSING_ID_COLOR, "#ffb3ba");
 }
 
@@ -272,17 +274,18 @@ function updateRowWithDiscogsData(rowNumber) {
 function updateColor(rowNumber) {
     var total = data[rowNumber - 1][columnIndexFor(TOTAL)];
     var lowest = data[rowNumber - 1][columnIndexFor(DISCOGS_LOWEST)];
-    var minimum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(MINIMUM_COLOR), settingsBoxColumnOffset + 1).getBackground());
-    var neutral_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(NEUTRAL_COLOR), settingsBoxColumnOffset + 1).getBackground());
-    var maximum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(MAXIMUM_COLOR), settingsBoxColumnOffset + 1).getBackground());
-    var zero_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(ZERO_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var profit_loss_threshold = sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_LOSS_THRESHOLD), settingsBoxColumnOffset + 1).getValue() / 100;
+    var minimum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(LOSS_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var neutral_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(BREAK_EVEN_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var maximum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var zero_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(NOT_LISTED_COLOR), settingsBoxColumnOffset + 1).getBackground());
 
     //This will calculate the percentage or profit or loss, keeping it within the +/- THRESHOLD_PERCENTAGE bounds to set static colors past the specified range.
-    var diffPercentage = Math.max(-THRESHOLD_PERCENTAGE, Math.min((lowest / total) - 1.00, THRESHOLD_PERCENTAGE));
+    var diffPercentage = Math.max(-profit_loss_threshold, Math.min((lowest / total) - 1.00, profit_loss_threshold));
 
-    //if the lowest value is 0, meaning there is nothing listed, the color is set to ZERO_COLOR
-    //if the diff is negative, we need to calculate the gradiant color between the MINUMUM_COLOR and NEUTRAL_COLOR
-    //if the diff is positive, we need to calculate the gradiant color between the NEUTRAL_COLOR and MAXIMUM_COLOR
+    //if the lowest value is 0, meaning there is nothing listed, the color is set to NOT_LISTED_COLOR
+    //if the diff is negative, we need to calculate the gradiant color between the MINUMUM_COLOR and BREAK_EVEN_COLOR
+    //if the diff is positive, we need to calculate the gradiant color between the BREAK_EVEN_COLOR and PROFIT_COLOR
     if(lowest == 0){
       sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setBackground(rgbToHex(zero_color.r, zero_color.g, zero_color.b));
     } else if (diffPercentage < 0) {
@@ -300,7 +303,8 @@ function updateColor(rowNumber) {
 
 //Method uses the slope-intercept formula to calculate gradiant color values between the bound and 0
 function calculateGradientColor(greaterColor, lesserColor, zeroIntercept, margin) {
-    return Math.round(((greaterColor - lesserColor) / THRESHOLD_PERCENTAGE) * margin + zeroIntercept);
+  var profit_loss_threshold = sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_LOSS_THRESHOLD), settingsBoxColumnOffset + 1).getValue() / 100;
+    return Math.round(((greaterColor - lesserColor) / profit_loss_threshold) * margin + zeroIntercept);
 }
 
 //Calculates and sets the difference in price between now and the last time the data was updated.
