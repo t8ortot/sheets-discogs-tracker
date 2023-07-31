@@ -86,9 +86,9 @@ The script will build an area on the left side where information about your viny
 - **Last Reload Date**: This is the last time the script updated the row. The script uses this date to determine if it has already updated the row for the day.
 - **Notes**: This is where notes about the item can be manually entered. This is only for your own records and is not used by the script for any reason.
 
-## Info Box
-The script will build an info box to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. Below is a description of what each row represents:
-### Summary Info
+## Info Section
+The script will build an info section to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. Below is a description of what each row represents:
+### Collection Summary
 - **Item Investment**: This is the sum of all values in the Price column. If prices are stored in detail, then this can represent the total amount of money spent on items before tax and shipping, otherwise, this value will be equal to Total Investment.
 - **Total Investment**: This is the sum of all values in the Total column. This can represent the total amount of money spent on items, including tax and shipping.
 - **Total Discogs Lowest**: This is the sum of all values in the Discogs Lowest column. This represents the minimum amount of money your collection is currently selling for. This should not be interpreted as collection value, since it is not calculated based on any sold prices.
@@ -105,7 +105,7 @@ The script will build an info box to the right of the [Collection](#collection).
 There are currently two methods you can use to import your collection, automatically or manually. There will always be a manual input needed for cost information, but you can leverage automation to fill in a lot of information from Discogs.
 
 ## Automatic Discogs Import
-The easiest way to put your collection into the spreadsheet is to let the script import your Discogs collection automatically. After satisfying the prerequisite below, this can be done by adding your username to the Discogs Username row of the [Info Box](#info-box) and then running the script.
+The easiest way to put your collection into the spreadsheet is to let the script import your Discogs collection automatically. After satisfying the prerequisite below, this can be done by adding your username to the Discogs Username row of the [Settings](#settings) and then running the script.
 
 ### Prerequisite
 A prerequisite for this to work properly is to set your Discogs collection to be public so the script can fetch it. The option to make your collection public can be found in the [Discogs privacy settings](https://www.discogs.com/settings/privacy) when signed in. If you do not wish to expose your collection to the public or do not have a collection in Discogs to import, you may use the next section's steps for [Manual Import](#manual-import).
@@ -174,6 +174,9 @@ Why doesn't my collection import automatically?
 
 Why do some of my items have the Discogs Lowest set to $0.00?
 - This happens when nothing is listed, therefore there is nothing to show. This can also happen if you manually entered an invalid Discogs ID.
+
+How do I change the color settings back to their default colors?
+- If you wish to revert to any of the color settings back to the defaults set in the code, simply remove the text from the cell. When the script runs again, it will replace the cell's color with the default and write "default" into the cell.
 
 
 # Feature Request List
