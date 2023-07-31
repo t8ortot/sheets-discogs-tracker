@@ -38,23 +38,33 @@ const LAST_RELOAD_DATE = "Last Reload Date (A)";
 //WARNING: Altering this list after adding items will mostly likely cause a mess on said itmes that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
 const sortableColumnNames = [DISCOGS_ID, ARTIST, ALBUM, PURCHASED_DATE, PRICE, TAX, SHIPPING, TOTAL, DISCOGS_LOWEST, RELOAD_DIFF, LAST_RELOAD_DATE, NOTES];
 
-//Row titles in the Info box.
-const USERNAME = "Discogs Username (M)";
+//Row titles in the Info box.=
 const ITEM_INVESTMENT = "Item Investment (A)";
 const TOTAL_INVESTMENT = "Total Investment (A)";
 const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest (A)";
 const TOTAL_RELOAD_DIFF = "Total Reload Difference (A)";
+
+//You may alter which rows appear in the Summary box and in which order they appear by altering this list.
+//WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
+const summaryRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF];
+const summaryBoxRowOffset = 4;
+const summaryBoxColumnOffset = sortableColumnNames.length + 2;
+
+const USERNAME = "Discogs Username (M)";
 const MINIMUM_COLOR = "Minimum Color (M)";
 const NEUTRAL_COLOR = "Neutral Color (M)";
 const MAXIMUM_COLOR = "Maximum Color (M)";
 const ZERO_COLOR = "Zero Color (M)"
 const MISSING_ID_COLOR = "Missing ID Color (M)"
 
-//You may alter which rows appear in the Info box and in which order they appear by altering this list.
+//You may alter which rows appear in the Settings box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
-const infoRows = [ITEM_INVESTMENT,TOTAL_INVESTMENT,TOTAL_DISCOGS_LOWEST,TOTAL_RELOAD_DIFF, USERNAME, MINIMUM_COLOR, NEUTRAL_COLOR, MAXIMUM_COLOR, ZERO_COLOR, MISSING_ID_COLOR];
-const infoBoxRowOffset = 4;
-const infoBoxColumnOffset = sortableColumnNames.length + 2;
+const settingsRows = [USERNAME, MINIMUM_COLOR, NEUTRAL_COLOR, MAXIMUM_COLOR, ZERO_COLOR, MISSING_ID_COLOR];
+const settingsBoxRowOffset = summaryBoxRowOffset + summaryRows.length + 1;
+const settingsBoxColumnOffset = sortableColumnNames.length + 2;
+
+const linksBoxRowOffset = settingsBoxRowOffset + settingsRows.length;
+const linksBoxColumnOffset = sortableColumnNames.length + 2
 
 
 //This is the main method that runs the script.
@@ -101,38 +111,50 @@ function normalizeSheetStructure() {
     sheet.getRange(1, 1, data.length, sortableColumnNames.length).createFilter();
     sheet.setFrozenRows(1);
 
-    createInfoBox();
+    createCollectionSummaryBox();
+    createSettingsBox();
+    createLinks();
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
 }
 
-function createInfoBox(){
-  sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset).setValue("Info");
-  sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset + 1).setValue("Values");
-  sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset, 1, 2).setBackground(rgbToHex(INFO_BOX_HEADER_COLOR[0], INFO_BOX_HEADER_COLOR[1], INFO_BOX_HEADER_COLOR[2]));
-  sheet.getRange(infoBoxRowOffset - 1, infoBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
+function createCollectionSummaryBox(){
+  sheet.getRange(summaryBoxRowOffset - 1, summaryBoxColumnOffset).setValue("Collection Summary");
+  sheet.getRange(summaryBoxRowOffset - 1, summaryBoxColumnOffset + 1).setValue("Values");
+  sheet.getRange(summaryBoxRowOffset - 1, summaryBoxColumnOffset, 1, 2).setBackground(rgbToHex(INFO_BOX_HEADER_COLOR[0], INFO_BOX_HEADER_COLOR[1], INFO_BOX_HEADER_COLOR[2]));
+  sheet.getRange(summaryBoxRowOffset - 1, summaryBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
   
-  for(var i = 0; i < infoRows.length; i++){
-    sheet.getRange(i + infoBoxRowOffset, infoBoxColumnOffset).setValue(infoRows[i]);
-    sheet.getRange(i + infoBoxRowOffset, infoBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
+  for(var i = 0; i < summaryRows.length; i++){
+    sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setValue(summaryRows[i]);
+    sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
   }
 
-  sheet.getRange(infoRows.length + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check for latest updates and documentation to the script.")');
-  sheet.getRange(infoRows.length + 1 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://paypal.me/t8ortot?country.x=US&locale.x=en_US", "Like it? Donate to show appreciation!")');
-  sheet.getRange(infoRows.length + 2 + infoBoxRowOffset, infoBoxColumnOffset).setFormula('=HYPERLINK("https://discord.gg/qsQ2CZ8rcS", "Question, issue, or suggestion? Join my Discord!")');
-
-  sheet.getRange(infoBoxRowOffset, infoBoxColumnOffset, infoRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
+  sheet.getRange(summaryBoxRowOffset, summaryBoxColumnOffset, summaryRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
   var itemInvestmentCostFormula = "=SUM(" + convertIndexToLetter(columnIndexFor(PRICE) + 1) + ":" + convertIndexToLetter(columnIndexFor(PRICE) + 1) + ")";
   var totalInvestmentCostFormula = "=SUM(" + convertIndexToLetter(columnIndexFor(TOTAL) + 1) + ":" + convertIndexToLetter(columnIndexFor(TOTAL) + 1) + ")";
   var totalDiscogsLowestFormula = "=SUM(" + convertIndexToLetter(columnIndexFor(DISCOGS_LOWEST) + 1) + ":" + convertIndexToLetter(columnIndexFor(DISCOGS_LOWEST) + 1) + ")";
   var totalReloadDiffFormula = "=SUM(" + convertIndexToLetter(columnIndexFor(RELOAD_DIFF) + 1) + ":" + convertIndexToLetter(columnIndexFor(RELOAD_DIFF) + 1) + ")";
 
-  sheet.getRange(infoBoxRowOffset + rowIndexFor(ITEM_INVESTMENT), infoBoxColumnOffset + 1).setFormula(itemInvestmentCostFormula);
-  sheet.getRange(infoBoxRowOffset + rowIndexFor(TOTAL_INVESTMENT), infoBoxColumnOffset + 1).setFormula(totalInvestmentCostFormula);
-  sheet.getRange(infoBoxRowOffset + rowIndexFor(TOTAL_DISCOGS_LOWEST), infoBoxColumnOffset + 1).setFormula(totalDiscogsLowestFormula);
-  sheet.getRange(infoBoxRowOffset + rowIndexFor(TOTAL_RELOAD_DIFF), infoBoxColumnOffset + 1).setFormula(totalReloadDiffFormula);
+  sheet.getRange(summaryBoxRowOffset + summaryRowIndexFor(ITEM_INVESTMENT), summaryBoxColumnOffset + 1).setFormula(itemInvestmentCostFormula);
+  sheet.getRange(summaryBoxRowOffset + summaryRowIndexFor(TOTAL_INVESTMENT), summaryBoxColumnOffset + 1).setFormula(totalInvestmentCostFormula);
+  sheet.getRange(summaryBoxRowOffset + summaryRowIndexFor(TOTAL_DISCOGS_LOWEST), summaryBoxColumnOffset + 1).setFormula(totalDiscogsLowestFormula);
+  sheet.getRange(summaryBoxRowOffset + summaryRowIndexFor(TOTAL_RELOAD_DIFF), summaryBoxColumnOffset + 1).setFormula(totalReloadDiffFormula);
+}
+
+function createSettingsBox(){
+  sheet.getRange(settingsBoxRowOffset - 1, settingsBoxColumnOffset).setValue("Settings");
+  sheet.getRange(settingsBoxRowOffset - 1, settingsBoxColumnOffset + 1).setValue("Values");
+  sheet.getRange(settingsBoxRowOffset - 1, settingsBoxColumnOffset, 1, 2).setBackground(rgbToHex(INFO_BOX_HEADER_COLOR[0], INFO_BOX_HEADER_COLOR[1], INFO_BOX_HEADER_COLOR[2]));
+  sheet.getRange(settingsBoxRowOffset - 1, settingsBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
+  
+  for(var i = 0; i < settingsRows.length; i++){
+    sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setValue(settingsRows[i]);
+    sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
+  }
+
+  sheet.getRange(settingsBoxRowOffset, settingsBoxColumnOffset, settingsRows.length, 2).setBorder(true, true, true, true, true, false, "#000000", null);
 
   setColorDefault(MINIMUM_COLOR, "#ffb3ba");
   setColorDefault(NEUTRAL_COLOR, "#ffffba");
@@ -141,8 +163,14 @@ function createInfoBox(){
   setColorDefault(MISSING_ID_COLOR, "#ffb3ba");
 }
 
+function createLinks(){
+  sheet.getRange(linksBoxRowOffset, linksBoxColumnOffset).setFormula('=HYPERLINK("https://github.com/t8ortot/sheets-discogs-tracker", "Check for latest updates and documentation to the script.")');
+  sheet.getRange(linksBoxRowOffset + 1, linksBoxColumnOffset).setFormula('=HYPERLINK("https://paypal.me/t8ortot?country.x=US&locale.x=en_US", "Like it? Donate to show appreciation!")');
+  sheet.getRange(linksBoxRowOffset + 2, linksBoxColumnOffset).setFormula('=HYPERLINK("https://discord.gg/qsQ2CZ8rcS", "Question, issue, or suggestion? Join my Discord!")');
+}
+
 function setColorDefault(colorSetting, defaultColorHex){
-  var valueCell = sheet.getRange(infoBoxRowOffset + rowIndexFor(colorSetting), infoBoxColumnOffset + 1);
+  var valueCell = sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(colorSetting), settingsBoxColumnOffset + 1);
   
   if (valueCell.getValue() != '' && defaultColorHex != valueCell.getBackground()) {
     valueCell.setValue("override");
@@ -153,7 +181,7 @@ function setColorDefault(colorSetting, defaultColorHex){
 }
 
 function loadUserCollection(){
-  var userName = sheet.getRange(infoBoxRowOffset + rowIndexFor(USERNAME), infoBoxColumnOffset + 1).getValue();
+  var userName = sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(USERNAME), settingsBoxColumnOffset + 1).getValue();
   if (userName != null && userName != ""){
     var url = 'https://api.discogs.com/users/' + userName + '/collection/folders/0/releases';
     
@@ -218,7 +246,7 @@ function convertIndexToLetter(i){
 
 //Sets whole row to MISSING_COLOR
 function setRowToMissingColor(rowNumber) {
-  var missing_id_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MISSING_ID_COLOR), infoBoxColumnOffset + 1).getBackground());
+  var missing_id_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(MISSING_ID_COLOR), settingsBoxColumnOffset + 1).getBackground());
   sheet.getRange(rowNumber, 1, 1, sortableColumnNames.length).setBackground(rgbToHex(missing_id_color.r, missing_id_color.g, missing_id_color.b));
 }
 
@@ -244,10 +272,10 @@ function updateRowWithDiscogsData(rowNumber) {
 function updateColor(rowNumber) {
     var total = data[rowNumber - 1][columnIndexFor(TOTAL)];
     var lowest = data[rowNumber - 1][columnIndexFor(DISCOGS_LOWEST)];
-    var minimum_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MINIMUM_COLOR), infoBoxColumnOffset + 1).getBackground());
-    var neutral_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(NEUTRAL_COLOR), infoBoxColumnOffset + 1).getBackground());
-    var maximum_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(MAXIMUM_COLOR), infoBoxColumnOffset + 1).getBackground());
-    var zero_color = hexToRgb(sheet.getRange(infoBoxRowOffset + rowIndexFor(ZERO_COLOR), infoBoxColumnOffset + 1).getBackground());
+    var minimum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(MINIMUM_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var neutral_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(NEUTRAL_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var maximum_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(MAXIMUM_COLOR), settingsBoxColumnOffset + 1).getBackground());
+    var zero_color = hexToRgb(sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(ZERO_COLOR), settingsBoxColumnOffset + 1).getBackground());
 
     //This will calculate the percentage or profit or loss, keeping it within the +/- THRESHOLD_PERCENTAGE bounds to set static colors past the specified range.
     var diffPercentage = Math.max(-THRESHOLD_PERCENTAGE, Math.min((lowest / total) - 1.00, THRESHOLD_PERCENTAGE));
@@ -342,8 +370,14 @@ function columnIndexFor(columnName) {
     return sortableColumnNames.findIndex(c => columnName == c);
 }
 
-//Finds the index number in the infoRows for the row header name.
-//This allows the user to move the row headers around on the infoRows array without any additional code changes.
-function rowIndexFor(rowName) {
-    return infoRows.findIndex(c => rowName == c);
+//Finds the index number in the summaryRows for the row header name.
+//This allows the user to move the row headers around on the summaryRows array without any additional code changes.
+function summaryRowIndexFor(rowName) {
+    return summaryRows.findIndex(c => rowName == c);
+}
+
+//Finds the index number in the settingsRows for the row header name.
+//This allows the user to move the row headers around on the settingsRows array without any additional code changes.
+function settingsRowIndexFor(rowName) {
+    return settingsRows.findIndex(c => rowName == c);
 }
