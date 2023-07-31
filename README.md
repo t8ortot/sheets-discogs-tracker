@@ -95,10 +95,12 @@ The script will build an info section to the right of the [Collection](#collecti
 - **Total Reload Difference**: This is the sum of all values in the Reload Difference column. It shows the total amount your collection's value has shifted since the last time the script updated the rows.
 ### Settings
 - **Discogs Username**: This is where you would put your Discogs username so the script can manually import your collection for you.
-- **Minimum Color**: This is the color that the Discogs Lowest cell is set to when the loss equals or exceeds the negative threshold. Update this cell's color to change the color the script will use.
-- **Neutral Color**: This is the color that the Discogs Lowest cell is set to when the profit/loss is 0, meaning that it is equal to the total paid. Update this cell's color to change the color the script will use.
-- **Maximum Color**: This is the color that the Discogs Lowest cell is set to when the profit equals or exceeds the positive threshold. Update this cell's color to change the color the script will use.
-- **Zero Color**: This is the color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price. Update this cell's color to change the color the script will use.
+- **Profit/Loss Threshold %**: This is the percentage used as the upper and lower bound when calculating the Discogs Lowest cell's color.
+	- **Example**: The default value, 10%, means that profits and losses of 10% or more will appear as the full Profit Color and Loss Color, respectively. A profit of 4% would show a blended color of 40% Profit Color and 60% Break-Even Color. A loss of 15% would show the full Loss Color without blending.
+- **Loss Color**: This is the color that the Discogs Lowest cell is set to when the loss equals or exceeds the Loss Threshold %. Update this cell's color to change the color the script will use.
+- **Break-Even Color**: This is the color that the Discogs Lowest cell is set to when there is no profit or loss, meaning that it is equal to the total paid. Update this cell's color to change the color the script will use.
+- **Profit Color**: This is the color that the Discogs Lowest cell is set to when the profit equals or exceeds the Profit Threshold %. Update this cell's color to change the color the script will use.
+- **Not Listed Color**: This is the color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price. Update this cell's color to change the color the script will use.
 - **Missing ID Color**: This is the color that the row is set to when there is no Discogs ID present. Update this cell's color to change the color the script will use.
 
 # Adding To Your Collection
@@ -184,7 +186,6 @@ These are features that have either been thought of or requested. They are consi
 - Ability to switch currency. Currently only outputs USD.
 - Ability to switch timezone for Last Reload Date. Currently only outputs in PST.
 - Ability to import using Discogs export .csv file.
-- Expose threshold setting
 - Change the timing mechanism to use the rate-limiting response headers from Discogs to prevent too many request errors.
 - Get the script Google-certified as an add-on so users can get and update the script via Google Marketplace instead.
 - Build a standalone desktop app that is separate from Google entirely, but would allow authentication to Discogs and grant more benefits from Discogs API.
