@@ -197,3 +197,4 @@ These are features that have either been thought of or requested. They are consi
 - Error handling so script does not stop on failed call
 - Add the ordered date with colors for how late it is.
 - Add a way to tell if there have been updates to the script.
+- Make release IDs into hyperlinks back to Discogs
