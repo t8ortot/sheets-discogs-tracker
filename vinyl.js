@@ -92,6 +92,7 @@ function hasDiscogsItemID(i) {
 
 //Initializes the column headers on the first row and sets up the filters each time to ensure the expected spreasheet structure remains intact.
 function normalizeSheetStructure() {
+    reloadSpreadsheet();
     for (var i = 1; i <= sortableColumnNames.length; i++) {
         sheet.getRange(1, i).setValue(sortableColumnNames[i - 1]);
     }
@@ -113,6 +114,9 @@ function normalizeSheetStructure() {
     createLinks();
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
+    sheet.getRange(convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1) + ":" + convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1)).setHorizontalAlignment("right");
+    sheet.getRange(convertIndexToLetter(summaryBoxColumnOffset) + ":" + convertIndexToLetter(summaryBoxColumnOffset)).setHorizontalAlignment("left");
+    sheet.getRange(convertIndexToLetter(summaryBoxColumnOffset + 1) + ":" + convertIndexToLetter(summaryBoxColumnOffset + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
 }
 
@@ -259,11 +263,13 @@ function resetRowColor(rowNumber) {
 
 //Uses the Discogs ID to query the Discogs API. Copies over relevent information into the spreadsheet such as the lowest price, album name, and artist name.
 function updateRowWithDiscogsData(rowNumber) {
-    var url = 'https://api.discogs.com/releases/' + data[rowNumber - 1][columnIndexFor(DISCOGS_ID)]
-    var response = UrlFetchApp.fetch(url);
+    var api_url = 'https://api.discogs.com/releases/' + data[rowNumber - 1][columnIndexFor(DISCOGS_ID)];
+    var web_url = 'https://www.discogs.com/release/' + data[rowNumber - 1][columnIndexFor(DISCOGS_ID)];
+    var response = UrlFetchApp.fetch(api_url);
     var json = JSON.parse(response.getContentText());
     Logger.log('Lowest price: ' + json.lowest_price);
     Logger.log('Discogs Album Name: ' + json.title);
+    sheet.getRange(rowNumber, columnIndexFor(DISCOGS_ID) + 1).setFormula('=HYPERLINK("' + web_url + '", "' + data[rowNumber - 1][columnIndexFor(DISCOGS_ID)] + '")');
     sheet.getRange(rowNumber, columnIndexFor(DISCOGS_LOWEST) + 1).setValue(numberToCurrency.format(json.lowest_price));
     sheet.getRange(rowNumber, columnIndexFor(ALBUM) + 1).setValue(json.title);
     var artistName = json.artists[0].name.replace(/ \(.*\)/g, '');
