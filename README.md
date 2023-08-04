@@ -73,7 +73,7 @@ The script automatically adds a custom menu above the spreadsheet called "Vinyl 
 
 ## Collection
 The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only you would know, requiring you to manually populate if you wish. Below is a description of what each column represents:
-- **Discogs ID**: This is the unique number that identifies the release in Discogs. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
+- **Discogs ID**: This is the unique number that identifies the release in Discogs. It is also turned into a hyperlink to the Discogs page for the item. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
 - **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
 - **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
 - **Purchased Date**: This is the date the item was purchased. This is only for your own records and is not used by the script for any reason.
@@ -197,4 +197,3 @@ These are features that have either been thought of or requested. They are consi
 - Error handling so script does not stop on failed call
 - Add the ordered date with colors for how late it is.
 - Add a way to tell if there have been updates to the script.
-- Make release IDs into hyperlinks back to Discogs
