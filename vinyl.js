@@ -17,28 +17,28 @@ const INFO_BOX_HEADER_COLOR = [169, 169, 169]; //Dark Gray
 const INFO_BOX_SUB_HEADER_COLOR = [211, 211, 211]; //Light Gray
 
 //Sortable Column Headers (Denoted with an (A) if it is automatically populated, or (M) if it requires manual input.)
-const DISCOGS_ID = "Discogs ID (A)";
-const ARTIST = "Artist (A)";
-const ALBUM = "Album (A)";
-const PURCHASED_DATE = "Purchased Date (M)";
-const PRICE = "Price (M)";
-const TAX = "Tax (M)";
-const SHIPPING = "Shipping (M)";
-const TOTAL = "Total (A)";
-const NOTES = "Notes (M)";
-const DISCOGS_LOWEST = "Discogs Lowest (A)";
-const RELOAD_DIFF = "Reload Difference (A)";
-const LAST_RELOAD_DATE = "Last Reload Date (A)";
+const DISCOGS_ID = createHeader("Discogs ID       ", "The ID for the release in Discogs. It's also a hyperlink to the Discogs page. It's automatically populated once in your Discogs collection.");
+const ARTIST = createHeader("Artist", "The name of the artist. It's automatically populated when a Discogs ID is added to the row.");
+const ALBUM = createHeader("Album","The name of the album. It's automatically populated when a Discogs ID is added to the row.");
+const PURCHASED_DATE = createHeader("Purchased Date       ","The date of purchase for the item. It can only be manually entered. It's not required.");
+const PRICE = createHeader("Price","The price of the item, pre-tax/shipping, or the total price if you do not wish to store the costs in detail. It can only be manually entered.");
+const TAX = createHeader("Tax","The price of tax for the item. It can only be manually entered.");
+const SHIPPING = createHeader("Shipping       ","The price of shipping for the item. It can only be manually entered.");
+const TOTAL = createHeader("Total","The sum of the Price, Tax, and Shipping values. It's automatically calculated. It's required to determine the Discogs Lowest profit/loss color.");
+const DISCOGS_LOWEST = createHeader("Discogs Lowest       ","The lowest listed price on Discogs. It's automatically populated when a Discogs ID is added to the row. The color is determined by the calculated profit/loss percentage. If there is no listing for the item, it's set to 0.00 and the Not Listed Color.");
+const RELOAD_DIFF = createHeader("Reload Difference       ","The difference amount since the Discogs Lowest was last updated. It's automatically calculated by the script.");
+const LAST_RELOAD_DATE = createHeader("Last Reload Date        ","The date the script last run on the row. It's automatically populated.");
+const NOTES = createHeader("Notes","Your notes about the item. They can only be manually entered and are not overwritten by the script.");
 
 //You may alter which column headers appear and in which order by altering this list.
 //WARNING: Altering this list after adding items will mostly likely cause a mess on said itmes that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
 const sortableColumnNames = [DISCOGS_ID, ARTIST, ALBUM, PURCHASED_DATE, PRICE, TAX, SHIPPING, TOTAL, DISCOGS_LOWEST, RELOAD_DIFF, LAST_RELOAD_DATE, NOTES];
 
 //Row titles in the Collection Summary
-const ITEM_INVESTMENT = "Item Investment (A)";
-const TOTAL_INVESTMENT = "Total Investment (A)";
-const TOTAL_DISCOGS_LOWEST = "Total Discogs Lowest (A)";
-const TOTAL_RELOAD_DIFF = "Total Reload Difference (A)";
+const ITEM_INVESTMENT = createHeader("Item Investment", "The sum of all values in the Price column. If costs are entered in detail, it's the amount paid for your collection pre-tax/shipping.");
+const TOTAL_INVESTMENT = createHeader("Total Investment", "The sum of all values in the Total column. It's the total amount paid for your collection, including tax and shipping.");
+const TOTAL_DISCOGS_LOWEST = createHeader("Total Discogs Lowest", "The sum of all values in the Discogs Lowest column. It's the minumum amount your collection is currently selling for.");
+const TOTAL_RELOAD_DIFF = createHeader("Total Reload Difference", "The sum of all values in the Reload Difference column. It's the total amount your collection's value has changed.");
 
 //You may alter which rows appear in the Summary box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
@@ -47,13 +47,13 @@ const summaryBoxRowOffset = 4;
 const summaryBoxColumnOffset = sortableColumnNames.length + 2;
 
 //Row titles in the Settings
-const USERNAME = "Discogs Username (M)";
-const PROFIT_LOSS_THRESHOLD = "Profit/Loss Threshold % (M)"
-const LOSS_COLOR = "Loss Color (M)";
-const BREAK_EVEN_COLOR = "Break-Even Color (M)";
-const PROFIT_COLOR = "Profit Color (M)";
-const NOT_LISTED_COLOR = "Not Listed Color (M)"
-const MISSING_ID_COLOR = "Missing ID Color (M)"
+const USERNAME = createHeader("Discogs Username", "Your Discogs username. Set it to allow the script to import your collection automatically.");
+const PROFIT_LOSS_THRESHOLD = createHeader("Profit/Loss Threshold %", "The percentage used as the upper and lower bound when calculating the Discogs Lowest cell's color. Set to 10% by default. Update to expand or shrink the threshold.");
+const LOSS_COLOR = createHeader("Loss Color", "The color that the Discogs Lowest cell is set to when the loss equals or exceeds the Loss Threshold %. Update this cell's color to change the color the script will use.");
+const BREAK_EVEN_COLOR = createHeader("Break-Even Color", "The color that the Discogs Lowest cell is set to when the Discogs Lowest is equal to the price paid. Update this cell's color to change the color the script will use.");
+const PROFIT_COLOR = createHeader("Profit Color", "The color that the Discogs Lowest cell is set to when the profit equals or exceeds the Profit Threshold %. Update this cell's color to change the color the script will use.");
+const NOT_LISTED_COLOR = createHeader("Not Listed Color", "The color that the Discogs Lowest cell is set to when the value is set to 0.00, meaning that there is no lowest listed price. Update this cell's color to change the color the script will use.");
+const MISSING_ID_COLOR = createHeader("Missing ID Color", "The color that the row is set to when there is no Discogs ID present. Update this cell's color to change the color the script will use.");
 
 //You may alter which rows appear in the Settings box and in which order they appear by altering this list.
 //WARNING: Altering this list after it has been already inititalized will mostly likely cause a mess that you will need to clean up. It is recommended to take a backup before making changes to the structure and manually fill in the data to their new locations.
@@ -94,7 +94,8 @@ function hasDiscogsItemID(i) {
 function normalizeSheetStructure() {
     reloadSpreadsheet();
     for (var i = 1; i <= sortableColumnNames.length; i++) {
-        sheet.getRange(1, i).setValue(sortableColumnNames[i - 1]);
+        sheet.getRange(1, i).setValue(sortableColumnNames[i - 1].displayName);
+        sheet.getRange(1, i).setNote(sortableColumnNames[i - 1].description);
     }
 
     for (var i = 2; i <= data.length; i++){
@@ -114,7 +115,7 @@ function normalizeSheetStructure() {
     createLinks();
     sheet.getRange(convertIndexToLetter(columnIndexFor(ARTIST) + 1) + ":" + convertIndexToLetter(columnIndexFor(ARTIST) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(columnIndexFor(ALBUM) + 1) + ":" + convertIndexToLetter(columnIndexFor(ALBUM) + 1)).setHorizontalAlignment("left");
-    sheet.getRange(convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1) + ":" + convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1)).setHorizontalAlignment("right");
+    sheet.getRange(convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1) + ":" + convertIndexToLetter(columnIndexFor(DISCOGS_ID) + 1)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(summaryBoxColumnOffset) + ":" + convertIndexToLetter(summaryBoxColumnOffset)).setHorizontalAlignment("left");
     sheet.getRange(convertIndexToLetter(summaryBoxColumnOffset + 1) + ":" + convertIndexToLetter(summaryBoxColumnOffset + 1)).setHorizontalAlignment("left");
     sheet.autoResizeColumns(1, sortableColumnNames.length - 1);
@@ -127,7 +128,8 @@ function createCollectionSummaryBox(){
   sheet.getRange(summaryBoxRowOffset - 1, summaryBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
   
   for(var i = 0; i < summaryRows.length; i++){
-    sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setValue(summaryRows[i]);
+    sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setValue(summaryRows[i].displayName);
+    sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setNote(summaryRows[i].description);
     sheet.getRange(i + summaryBoxRowOffset, summaryBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
   }
 
@@ -151,7 +153,8 @@ function createSettingsBox(){
   sheet.getRange(settingsBoxRowOffset - 1, settingsBoxColumnOffset, 1, 2).setBorder(true, true, true, true, false, false, "#000000", null);
   
   for(var i = 0; i < settingsRows.length; i++){
-    sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setValue(settingsRows[i]);
+    sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setValue(settingsRows[i].displayName);
+    sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setNote(settingsRows[i].description);
     sheet.getRange(i + settingsBoxRowOffset, settingsBoxColumnOffset).setBackground(rgbToHex(INFO_BOX_SUB_HEADER_COLOR[0], INFO_BOX_SUB_HEADER_COLOR[1], INFO_BOX_SUB_HEADER_COLOR[2]));
   }
 
@@ -161,7 +164,6 @@ function createSettingsBox(){
     sheet.getRange(settingsBoxRowOffset + settingsRowIndexFor(PROFIT_LOSS_THRESHOLD), settingsBoxColumnOffset + 1).setValue("10");
   }
   
-
   setColorDefault(LOSS_COLOR, "#ffb3ba");
   setColorDefault(BREAK_EVEN_COLOR, "#ffffba");
   setColorDefault(PROFIT_COLOR, "#baffc9");
@@ -208,7 +210,7 @@ function loadUserCollection(){
 
 function loadDiscogsData(){
   for (var i = 1; i < data.length; i++) {
-        Logger.log(DISCOGS_ID + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM + ': ' + data[i][columnIndexFor(ALBUM)]);
+        Logger.log(DISCOGS_ID.displayName + ': ' + data[i][columnIndexFor(DISCOGS_ID)] + '  ' + ARTIST.displayName + ': ' + data[i][columnIndexFor(ARTIST)] + '   ' + ALBUM.displayName + ': ' + data[i][columnIndexFor(ALBUM)]);
         if (hasDiscogsItemID(i)) {
             if (shouldUpdateRow(data, i)) {
                 var oldLowest = data[i][columnIndexFor(DISCOGS_LOWEST)];
@@ -377,17 +379,24 @@ function shouldUpdateRow(data, i) {
 //Finds the index number in the sortableColumnNames for the column header name.
 //This allows the user to move the column headers around on the sortableColumnNames array without any additional code changes.
 function columnIndexFor(columnName) {
-    return sortableColumnNames.findIndex(c => columnName == c);
+    return sortableColumnNames.findIndex(c => columnName.displayName == c.displayName);
 }
 
 //Finds the index number in the summaryRows for the row header name.
 //This allows the user to move the row headers around on the summaryRows array without any additional code changes.
 function summaryRowIndexFor(rowName) {
-    return summaryRows.findIndex(c => rowName == c);
+    return summaryRows.findIndex(c => rowName.displayName == c.displayName);
 }
 
 //Finds the index number in the settingsRows for the row header name.
 //This allows the user to move the row headers around on the settingsRows array without any additional code changes.
 function settingsRowIndexFor(rowName) {
-    return settingsRows.findIndex(c => rowName == c);
+    return settingsRows.findIndex(c => rowName.displayName == c.displayName);
+}
+
+function createHeader(displayName, description) {
+  return {
+    displayName: displayName,
+    description: description
+  }
 }
