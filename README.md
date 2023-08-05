@@ -69,10 +69,10 @@ The script automatically adds a custom menu above the spreadsheet called "Vinyl 
 - **Run Script**: This will run the entire script. Please see [Outline of Script Steps](#outline-of-script-steps) for additional information on what the entire script does.
 - **Reset Structure**: This will only reset the spreadsheet's structure back to what is coded. See below for what that structure is.
 - **Load New Discogs Items**: This will only add new rows with the Discogs IDs of items in your Discogs collection that are not already in the spreadsheet.
-- **Load Discogs Data**: This will update all rows with a Discogs ID and Last Reload Date not equal to today's date with latest data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for more information.
+- **Load Discogs Data**: This will update all rows with a Discogs ID and Last Reload Date not equal to today's date with the latest data from Discogs. See [Loading Discogs Data](#loading-discogs-data) for more information.
 
 ## Collection
-The script will build an area on the left side where information about your vinyl collection is stored. Each column is marked to signify that they are **(A)utomatically** or **(M)anually** populated. Fields marked with an **(A)** are automatically fetched or calculated once a Discogs ID is added to the row. Fields marked with an **(M)** are fields that represent information that only you would know, requiring you to manually populate if you wish. Below is a description of what each column represents:
+The script will build an area on the left side where information about your vinyl collection is stored. You can hover over the column header for a brief description of what each column is used for. Below are the same or more expanded descriptions for each column.
 - **Discogs ID**: This is the unique number that identifies the release in Discogs. It is also turned into a hyperlink to the Discogs page for the item. This can be found manually in the URL like so: discogs.com/[Discogs ID]-Artist-Album
 - **Artist**: This is the name of the artist. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the artist's name as shown in Discogs.
 - **Album**: This is the name of the album. It can be manually populated to keep track of purchases not yet in your Discogs collection. Once a Discogs ID is added to the row, it is overwritten with the album's name as shown in Discogs.
@@ -87,7 +87,7 @@ The script will build an area on the left side where information about your viny
 - **Notes**: This is where notes about the item can be manually entered. This is only for your own records and is not used by the script for any reason.
 
 ## Info Section
-The script will build an info section to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. Below is a description of what each row represents:
+The script will build an info section to the right of the [Collection](#collection). This section will show a summary of your collection, as well as expose certain settings that you can configure. You can hover over the row headers for a brief description of what each row is used for. Below are the same or more expanded descriptions for each row.
 ### Collection Summary
 - **Item Investment**: This is the sum of all values in the Price column. If prices are stored in detail, then this can represent the total amount of money spent on items before tax and shipping, otherwise, this value will be equal to Total Investment.
 - **Total Investment**: This is the sum of all values in the Total column. This can represent the total amount of money spent on items, including tax and shipping.
