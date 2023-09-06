@@ -180,6 +180,9 @@ Why do some of my items have the Discogs Lowest set to $0.00?
 How do I change the color settings back to their default colors?
 - If you wish to revert to any of the color settings back to the defaults set in the code, simply remove the text from the cell. When the script runs again, it will replace the cell's color with the default and write "default" into the cell.
 
+Google Sheets won't run the script anymore! It's either doing barely anything, or nothing at all and ending in an error. What do I do?
+- I have experienced issues with Apps Script that prevent it from communicating with the Sheets API. Unfortunately, these errors are out of my control. Fortunately, there is a way around it, which is to migrate all your data into a brand-new spreadsheet and use that instead. You can follow the same instructions from above to set up a new spreadsheet, and then copy paste all your Discogs IDs, Purchase Data, and Notes manually and the script will fill back in the rest.
+
 
 # Feature Request List
 These are features that have either been thought of or requested. They are considered, but not guaranteed, to be added in the future.
